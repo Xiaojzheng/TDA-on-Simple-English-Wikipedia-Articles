@@ -1,0 +1,3262 @@
+---
+title: "wiki_MD"
+author: "Xiaojun Zheng"
+date: "6/8/2018"
+output: html_document
+---
+
+### popularity 1-2000
+
+```{r}
+wiki1 <- read.csv("~/wiki1.csv") ### max2000 and random1
+wiki1<- wiki1[rowSums(is.na(wiki1)) != ncol(wiki1),]
+wiki1$weight<- wiki1$weighted_bottleneck/wiki1$raw_distance
+sum(wiki1$weight,na.rm = TRUE) ### 0.1286924
+unique(wiki1$weight)
+
+par(mfrow=c(4,2))
+
+plot(wiki1$slope,wiki1$weight,col="red")
+points(wiki1$slope,wiki1$weighted_bottleneck,col="green")
+
+plot(wiki1$slope,wiki1$raw_distance,col="blue")
+
+wiki1[which.max(wiki1$weighted_bottleneck),]
+wiki1[which.max(wiki1$raw_distance),]
+ 
+
+wiki2 <- read.csv("~/wiki2.csv") ### city2000 and random1
+wiki2<- wiki2[rowSums(is.na(wiki2)) != ncol(wiki2),]
+wiki2$weight<- wiki2$weighted_bottleneck/wiki2$raw_distance
+sum(wiki2$weight,na.rm = TRUE) ### 0.1286928
+
+
+plot(wiki2$slope,wiki2$weight,col="red")
+points(wiki2$slope,wiki2$weighted_bottleneck,col="green")
+
+plot(wiki2$slope,wiki2$raw_distance,col="blue")
+ 
+wiki2[which.max(wiki2$weighted_bottleneck),]
+wiki2[which.max(wiki2$raw_distance),]
+
+wiki3 <- read.csv("~/wiki3.csv") ### random from wiki 2000 and random1
+wiki3<- wiki3[rowSums(is.na(wiki3)) != ncol(wiki3),]
+wiki3$weight<- wiki3$weighted_bottleneck/wiki3$raw_distance
+sum(wiki3$weight,na.rm = TRUE) ### 0.128691
+
+
+plot(wiki3$slope,wiki3$weight,col="red")
+points(wiki3$slope,wiki3$weighted_bottleneck,col="green")
+
+plot(wiki3$slope,wiki3$raw_distance,col="blue")
+ 
+wiki3[which.max(wiki3$weighted_bottleneck),]
+wiki3[which.max(wiki3$raw_distance),]
+
+wiki4 <- read.csv("~/wiki4.csv") ### random1 and random2
+wiki4<- wiki4[rowSums(is.na(wiki4)) != ncol(wiki4),]
+wiki4$weight<- wiki4$weighted_bottleneck/wiki4$raw_distance
+sum(wiki4$weight,na.rm = TRUE) ### 0.128667
+
+
+plot(wiki4$slope,wiki4$weight,col="red")
+points(wiki4$slope,wiki4$weighted_bottleneck,col="green")
+
+plot(wiki4$slope,wiki4$raw_distance,col="blue")
+ 
+wiki4[which.max(wiki4$weighted_bottleneck),]
+wiki4[which.max(wiki4$raw_distance),]
+```
+
+
+### popularity 1/2000-1
+
+```{r}
+wiki1_new <- read.csv("~/wiki1_new.csv") ### max2000 and random1
+wiki1_new<- wiki1_new[rowSums(is.na(wiki1_new)) != ncol(wiki1_new),]
+wiki1_new$weight<- wiki1_new$weighted_bottleneck/wiki1_new$raw_distance
+sum(wiki1_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki1_new$weight)
+
+par(mfrow=c(4,2))
+
+plot(wiki1_new$angle,wiki1_new$weight,col="red")
+points(wiki1_new$angle,wiki1_new$weighted_bottleneck,col="green")
+
+plot(wiki1_new$angle,wiki1_new$raw_distance,col="blue")
+
+wiki1_new[which.max(wiki1_new$weighted_bottleneck),] ### 4.29
+wiki1_new[which.max(wiki1_new$raw_distance),] ### 4.29
+wiki1_new[which(wiki1_new$weighted_bottleneck>0.368),] ### 13 angles
+wiki1_new[which(wiki1_new$raw_distance>5),] ### 13 angles
+
+
+
+wiki2_new <- read.csv("~/wiki2_new.csv") ### city2000 and random1
+wiki2_new<- wiki2_new[rowSums(is.na(wiki2_new)) != ncol(wiki2_new),]
+wiki2_new$weight<- wiki2_new$weighted_bottleneck/wiki2_new$raw_distance
+sum(wiki2_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki2_new$weight)
+
+#par(mfrow=c(1,2))
+
+plot(wiki2_new$angle,wiki2_new$weight,col="red")
+points(wiki2_new$angle,wiki2_new$weighted_bottleneck,col="green")
+
+plot(wiki2_new$angle,wiki2_new$raw_distance,col="blue")
+
+wiki2_new[which.max(wiki2_new$weighted_bottleneck),] ### 47.1
+wiki2_new[which.max(wiki2_new$raw_distance),] ### 4.29
+wiki2_new[which(wiki2_new$weighted_bottleneck>0.368),] ### 29 angles
+
+
+wiki3_new <- read.csv("~/wiki3_new.csv") ### random and random1
+wiki3_new<- wiki3_new[rowSums(is.na(wiki3_new)) != ncol(wiki3_new),]
+wiki3_new$weight<- wiki3_new$weighted_bottleneck/wiki3_new$raw_distance
+sum(wiki3_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki3_new$weight)
+
+#par(mfrow=c(1,2))
+
+plot(wiki3_new$angle,wiki3_new$weight,col="red")
+points(wiki3_new$angle,wiki3_new$weighted_bottleneck,col="green")
+
+plot(wiki3_new$angle,wiki3_new$raw_distance,col="blue")
+
+wiki3_new[which.max(wiki3_new$weighted_bottleneck),] ### 47.1
+wiki3_new[which.max(wiki3_new$raw_distance),] ### 4.29
+wiki3_new[which(wiki3_new$weighted_bottleneck>0.368),] ### 20 angles
+
+
+
+wiki4_new <- read.csv("~/wiki4_new.csv") ### random1 and random2
+wiki4_new<- wiki4_new[rowSums(is.na(wiki4_new)) != ncol(wiki4_new),]
+wiki4_new$weight<- wiki4_new$weighted_bottleneck/wiki4_new$raw_distance
+sum(wiki4_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki4_new$weight)
+
+#par(mfrow=c(1,2))
+
+plot(wiki4_new$angle,wiki4_new$weight,col="red")
+points(wiki4_new$angle,wiki4_new$weighted_bottleneck,col="green")
+
+plot(wiki4_new$angle,wiki4_new$raw_distance,col="blue")
+
+wiki4_new[which.max(wiki4_new$weighted_bottleneck),] ### 42.9
+wiki4_new[which.max(wiki4_new$raw_distance),] ### 4.29
+wiki4_new[which(wiki4_new$weighted_bottleneck>0.0526),] ### 182 angles
+```
+
+### Barcodes
+
+```{r}
+barcodes1 <- read_csv("~/barcodes1.csv", col_names = FALSE)
+times<- seq(7,ncol(barcodes1),3)
+for (i in 1:nrow(barcodes1)){
+  a<- as.numeric(substring(barcodes1[1,times],2))
+}
+
+```
+
+
+### Bottleneck distance 1
+```{r}
+self1 <- read_csv("~/self1.txt", col_names = FALSE) ### max2000
+other1 <- read_csv("~/other1.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self1)){
+  if (is.na(self1[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self1<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other1)){
+  if (is.na(other1[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other1<- bar.other
+
+bar.diff1<- bar.other1-bar.self1
+
+```
+
+### Bottleneck distance 2
+```{r}
+self2 <- read_csv("~/self2.txt", col_names = FALSE) ### city2000
+other2 <- read_csv("~/other2.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self2)){
+  if (is.na(self2[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self2<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other2)){
+  if (is.na(other2[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other2<- bar.other
+
+bar.diff2<- bar.other2-bar.self2
+
+```
+
+
+### Bottleneck distance 3
+```{r}
+self3 <- read_csv("~/self3.txt", col_names = FALSE) ### random_from_wiki_2000
+other3 <- read_csv("~/other3.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self3)){
+  if (is.na(self3[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self3<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other3)){
+  if (is.na(other3[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other3<- bar.other
+
+bar.diff3<- bar.other3-bar.self3
+
+```
+
+
+### Bottleneck distance 4
+```{r}
+self4 <- read_csv("~/self4.txt", col_names = FALSE) ### random2
+other4 <- read_csv("~/other4.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self4)){
+  if (is.na(self4[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self4<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other4)){
+  if (is.na(other4[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other4<- bar.other
+
+bar.diff4<- bar.other4-bar.self4
+
+```
+
+
+### Bottleneck_angle_offset
+```{r}
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+
+bar.diff1.list<- as.numeric(bar.diff1)
+bar.diff2.list<- as.numeric(bar.diff2)
+bar.diff3.list<- as.numeric(bar.diff3)
+bar.diff4.list<- as.numeric(bar.diff4)
+wiki1_new$bar.diff<- bar.diff1.list
+wiki2_new$bar.diff<- bar.diff2.list
+wiki3_new$bar.diff<- bar.diff3.list
+wiki4_new$bar.diff<- bar.diff4.list
+
+angle_class<- as.numeric(levels(as.factor(wiki1_new$angle)))
+
+### angle 1-5
+raw1<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar1<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 6-10
+raw2<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar2<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 11-15
+raw3<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar3<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 16-20
+raw4<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar4<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+plot_grid(raw1,bar1,raw2,bar2,raw3,bar3,raw4,bar4,ncol=2)
+
+
+### angle 1-5
+raw1<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar1<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 6-10
+raw2<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar2<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 11-15
+raw3<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar3<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 16-20
+raw4<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar4<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+plot_grid(raw1,bar1,raw2,bar2,raw3,bar3,raw4,bar4,ncol=2)
+```
+
+### Replacement data sets
+```{r}
+options(scipen=999)
+max2000_rank <- read_delim("~/max2000_rank.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+random1_2000 <- read_delim("~/random1_2000.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+max2000_rank<- max2000_rank[4:2003,]
+random1_2000<- random1_2000[4:2003,]
+max2000_rank<- matrix(as.numeric(unlist(max2000_rank)),nrow=2000)
+random1_2000<- matrix(as.numeric(unlist(random1_2000)),nrow=2000)
+
+### rp 20
+rp<- sample(1:2000,20)
+max2000_rank_rp20<- max2000_rank
+max2000_rank_rp20[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 40
+rp<- sample(1:2000,40)
+max2000_rank_rp40<- max2000_rank
+max2000_rank_rp40[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 60
+rp<- sample(1:2000,60)
+max2000_rank_rp60<- max2000_rank
+max2000_rank_rp60[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 80
+rp<- sample(1:2000,80)
+max2000_rank_rp80<- max2000_rank
+max2000_rank_rp80[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 100
+rp<- sample(1:2000,100)
+max2000_rank_rp100<- max2000_rank
+max2000_rank_rp100[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 120
+rp<- sample(1:2000,120)
+max2000_rank_rp120<- max2000_rank
+max2000_rank_rp120[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 140
+rp<- sample(1:2000,140)
+max2000_rank_rp140<- max2000_rank
+max2000_rank_rp140[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 160
+rp<- sample(1:2000,160)
+max2000_rank_rp160<- max2000_rank
+max2000_rank_rp160[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 180
+rp<- sample(1:2000,180)
+max2000_rank_rp180<- max2000_rank
+max2000_rank_rp180[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 200
+rp<- sample(1:2000,200)
+max2000_rank_rp200<- max2000_rank
+max2000_rank_rp200[rp,1:200]<- random1_2000[rp,1:200]
+
+write.table(max2000_rank_rp20, "max2000_rank_rp20.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp40, "max2000_rank_rp40.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp60, "max2000_rank_rp60.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp80, "max2000_rank_rp80.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp100, "max2000_rank_rp100.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp120, "max2000_rank_rp120.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp140, "max2000_rank_rp140.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp160, "max2000_rank_rp160.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp180, "max2000_rank_rp180.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp200, "max2000_rank_rp200.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### More replacement
+
+### rp 250
+rp<- sample(1:2000,250)
+max2000_rank_rp250<- max2000_rank
+max2000_rank_rp250[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 300
+rp<- sample(1:2000,300)
+max2000_rank_rp300<- max2000_rank
+max2000_rank_rp300[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 350
+rp<- sample(1:2000,350)
+max2000_rank_rp350<- max2000_rank
+max2000_rank_rp350[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 400
+rp<- sample(1:2000,400)
+max2000_rank_rp400<- max2000_rank
+max2000_rank_rp400[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 450
+rp<- sample(1:2000,450)
+max2000_rank_rp450<- max2000_rank
+max2000_rank_rp450[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 500
+rp<- sample(1:2000,500)
+max2000_rank_rp500<- max2000_rank
+max2000_rank_rp500[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 550
+rp<- sample(1:2000,550)
+max2000_rank_rp550<- max2000_rank
+max2000_rank_rp550[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 600
+rp<- sample(1:2000,600)
+max2000_rank_rp600<- max2000_rank
+max2000_rank_rp600[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 650
+rp<- sample(1:2000,650)
+max2000_rank_rp650<- max2000_rank
+max2000_rank_rp650[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 700
+rp<- sample(1:2000,700)
+max2000_rank_rp700<- max2000_rank
+max2000_rank_rp700[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 750
+rp<- sample(1:2000,750)
+max2000_rank_rp750<- max2000_rank
+max2000_rank_rp750[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 800
+rp<- sample(1:2000,800)
+max2000_rank_rp800<- max2000_rank
+max2000_rank_rp800[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 850
+rp<- sample(1:2000,850)
+max2000_rank_rp850<- max2000_rank
+max2000_rank_rp850[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 900
+rp<- sample(1:2000,900)
+max2000_rank_rp900<- max2000_rank
+max2000_rank_rp900[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 950
+rp<- sample(1:2000,950)
+max2000_rank_rp950<- max2000_rank
+max2000_rank_rp950[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1000
+rp<- sample(1:2000,1000)
+max2000_rank_rp1000<- max2000_rank
+max2000_rank_rp1000[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1050
+rp<- sample(1:2000,1050)
+max2000_rank_rp1050<- max2000_rank
+max2000_rank_rp1050[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1100
+rp<- sample(1:2000,1100)
+max2000_rank_rp1100<- max2000_rank
+max2000_rank_rp1100[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1150
+rp<- sample(1:2000,1150)
+max2000_rank_rp1150<- max2000_rank
+max2000_rank_rp1150[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1200
+rp<- sample(1:2000,1200)
+max2000_rank_rp1200<- max2000_rank
+max2000_rank_rp1200[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1250
+rp<- sample(1:2000,1250)
+max2000_rank_rp1250<- max2000_rank
+max2000_rank_rp1250[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1300
+rp<- sample(1:2000,1300)
+max2000_rank_rp1300<- max2000_rank
+max2000_rank_rp1300[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1350
+rp<- sample(1:2000,1350)
+max2000_rank_rp1350<- max2000_rank
+max2000_rank_rp1350[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1400
+rp<- sample(1:2000,1400)
+max2000_rank_rp1400<- max2000_rank
+max2000_rank_rp1400[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1450
+rp<- sample(1:2000,1450)
+max2000_rank_rp1450<- max2000_rank
+max2000_rank_rp1450[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1500
+rp<- sample(1:2000,1500)
+max2000_rank_rp1500<- max2000_rank
+max2000_rank_rp1500[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1550
+rp<- sample(1:2000,1550)
+max2000_rank_rp1550<- max2000_rank
+max2000_rank_rp1550[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1600
+rp<- sample(1:2000,1600)
+max2000_rank_rp1600<- max2000_rank
+max2000_rank_rp1600[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1650
+rp<- sample(1:2000,1650)
+max2000_rank_rp1650<- max2000_rank
+max2000_rank_rp1650[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1700
+rp<- sample(1:2000,1700)
+max2000_rank_rp1700<- max2000_rank
+max2000_rank_rp1700[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1750
+rp<- sample(1:2000,1750)
+max2000_rank_rp1750<- max2000_rank
+max2000_rank_rp1750[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1800
+rp<- sample(1:2000,1800)
+max2000_rank_rp1800<- max2000_rank
+max2000_rank_rp1800[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1850
+rp<- sample(1:2000,1850)
+max2000_rank_rp1850<- max2000_rank
+max2000_rank_rp1850[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1900
+rp<- sample(1:2000,1900)
+max2000_rank_rp1900<- max2000_rank
+max2000_rank_rp1900[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1950
+rp<- sample(1:2000,1950)
+max2000_rank_rp1950<- max2000_rank
+max2000_rank_rp1950[rp,1:200]<- random1_2000[rp,1:200]
+
+write.table(max2000_rank_rp250, "max2000_rank_rp250.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp300, "max2000_rank_rp300.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp350, "max2000_rank_rp350.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp400, "max2000_rank_rp400.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp450, "max2000_rank_rp450.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp500, "max2000_rank_rp500.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp550, "max2000_rank_rp550.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp600, "max2000_rank_rp600.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp650, "max2000_rank_rp650.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp700, "max2000_rank_rp700.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp750, "max2000_rank_rp750.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp800, "max2000_rank_rp800.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp850, "max2000_rank_rp850.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp900, "max2000_rank_rp900.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp950, "max2000_rank_rp950.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1000, "max2000_rank_rp1000.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1050, "max2000_rank_rp1050.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1100, "max2000_rank_rp1100.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1150, "max2000_rank_rp1150.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1200, "max2000_rank_rp1200.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1250, "max2000_rank_rp1250.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1300, "max2000_rank_rp1300.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1350, "max2000_rank_rp1350.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1400, "max2000_rank_rp1400.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1450, "max2000_rank_rp1450.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1500, "max2000_rank_rp1500.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1550, "max2000_rank_rp1550.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1600, "max2000_rank_rp1600.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1650, "max2000_rank_rp1650.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1700, "max2000_rank_rp1700.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1750, "max2000_rank_rp1750.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1800, "max2000_rank_rp1800.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1850, "max2000_rank_rp1850.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1900, "max2000_rank_rp1900.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1950, "max2000_rank_rp1950.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### small replacement
+
+### rp 1
+rp<- sample(1:2000,1)
+max2000_rank_rp1<- max2000_rank
+max2000_rank_rp1[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp1, "max2000_rank_rp1.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 2
+rp<- sample(1:2000,2)
+max2000_rank_rp2<- max2000_rank
+max2000_rank_rp2[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp2, "max2000_rank_rp2.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 3
+rp<- sample(1:2000,3)
+max2000_rank_rp3<- max2000_rank
+max2000_rank_rp3[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp3, "max2000_rank_rp3.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 4
+rp<- sample(1:2000,4)
+max2000_rank_rp4<- max2000_rank
+max2000_rank_rp4[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp4, "max2000_rank_rp4.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 5
+rp<- sample(1:2000,5)
+max2000_rank_rp5<- max2000_rank
+max2000_rank_rp5[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp5, "max2000_rank_rp5.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 6
+rp<- sample(1:2000,6)
+max2000_rank_rp6<- max2000_rank
+max2000_rank_rp6[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp6, "max2000_rank_rp6.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 8
+rp<- sample(1:2000,8)
+max2000_rank_rp8<- max2000_rank
+max2000_rank_rp8[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp8, "max2000_rank_rp8.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 10
+rp<- sample(1:2000,10)
+max2000_rank_rp10<- max2000_rank
+max2000_rank_rp10[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp10, "max2000_rank_rp10.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### 20 bins in RIVET
+rp_num<- c(1,5,10,20,seq(40,200,by=20),seq(250,1950,by=50))
+rp_md<- c(0.05263446864,0.05842528485,0.05744390403,0.1101542249,0.1108197802,0.1108443354,0.1109104706,0.1109288877,0.1108443354,0.1108948986,0.1109233195,0.1109071737,0.1109198794,0.1109198794,0.1109119947,0.1109119947,0.1109214004,0.1109132089,0.1627700091,0.1627746893,0.1627746893,0.1627788976,0.1627779542,0.162776907,0.162776907,0.1627667028,0.1627788976,0.1627734314,0.1627734314,0.1627746893,0.1627770193,0.1627777946,0.1627777946,0.1627788976,0.1627746893,0.1627788976,0.2146297285,0.2150093251,0.2150093251,0.2150072151,0.2150093251,0.21500767,0.2668596001,0.2668597071,0.2668596001,0.2668596001,0.3190906936,0.3682807685)
+plot(rp_num, rp_md)
+
+### 40 bins in RIVET
+rp_num<- c(1,5,10,20,seq(40,200,by=20),seq(250,1950,by=50))
+rp_md<- c(0.05675972036,0.08117526604,0.08186803306,0.1079988912,0.1078394127,0.1079011702,0.09992893884,0.1078396809,0.1078876223,0.1079135386,0.1079005807,0.1080939454,0.1079092193,0.133541563,0.107903518,0.1234514693,0.1080889513,0.1335416483,0.1331825726,0.1331825726,0.1331865086,0.1331825726,0.1331836602,0.1584511386,0.1584375185,0.1584513555,0.1584473646,0.1584476993,0.1584473646,0.1584475501,0.1584511386,0.1584511386,0.1584513555,0.1837140645,0.1837172464,0.1837140542,0.1838994197,0.1838994197,0.2091637404,0.2091652736,0.20916519,0.2344318194,0.2346169541,0.2598832401,0.2598832401,0.3107844048,0.3362345207,0.3362345207)
+plot(rp_num, rp_md)
+
+rp_md_random<- c(0.346150887,0.3461404363,0.3461449627,0.346152529,0.3461528397,0.3461535719,0.3461537716,0.3461528397,0.3461533944,0.3461537272,0.3461535497,0.3461536607,0.3461536607,0.3461535941,0.3461535941,0.346153705,0.3461535941,0.3461536829,0.3461537272,0.3461537272,0.3461537716,0.3461537494,0.3461537716,0.3461537716,0.3461535941,0.3461537716,0.346153705,0.3461537494,0.3461537272,0.3461537494,0.3461537716,0.3461537716,0.3461537716,0.3461537272,0.3461537716,0.3461537716,0.3461537716,0.2564120255,0.3461537272,0.2820524768,0.2564125779,0.3076934184,0.2564125779,0.3461537716,0.3461537716,0.2051296518,0.1025665542,0.102566554223)
+plot(rp_num,rp_md_random)
+```
+
+
+```{r}
+wiki<- c(0.3682807685, 0.3683908953, 0.3684205847, 0.3682815584, 0.3683917432, 0.3684214326, 0.3682809847, 0.3683911693, 0.3684213799, 0.3682815584, 0.3683917432, 0.3684214326, 0.3682815584, 0.3683917432, 0.3684214326, 0.3682815584, 0.3683917432, 0.3684214326)
+random<- c(0.05263730484, 0.05263730484, 0.05263730484, 0.05263730484, 0.05263730484, 0.05263554452, 0.05263554798, 0.05263566192, 0.05263566192, 0.05263554452, 0.0526373083, 0.05263565845, 0.05263566192, 0.05263566192, 0.05263555144)
+total<- c(wiki,random)
+diff<- c(rep(1,length(wiki)),rep(0,rep(length(random))))
+both<- data.frame(total=total, diff=diff)
+
+wilcox.test(total~diff, data=both)
+
+```
+
+### large scale testing
+```{r}
+city2000_rank_dim <- read_csv("~/city2000_rank_dim.txt", col_names = FALSE)
+max2000_rank_dim <- read_csv("~/max2000_rank_dim.txt", col_names = FALSE)
+random_from_wiki_2000_dim<- read_csv("~/random_from_wiki_2000_dim.txt", col_names = FALSE)
+random1_dim<- read_csv("~/random1_dim.txt", col_names = FALSE)
+random2_dim<- read_csv("~/random2_dim.txt", col_names = FALSE)
+random3_dim<- read_csv("~/random3_dim.txt", col_names = FALSE)
+random4_dim<- read_csv("~/random4_dim.txt", col_names = FALSE)
+random5_dim<- read_csv("~/random5_dim.txt", col_names = FALSE)
+random6_dim<- read_csv("~/random6_dim.txt", col_names = FALSE)
+
+city2000_rank_dim$X1<- gsub("[^0-9]", "", city2000_rank_dim$X1)
+city2000_rank_dim$X3<- gsub("[^0-9]", "", city2000_rank_dim$X3) 
+max2000_rank_dim$X1<- gsub("[^0-9]", "", max2000_rank_dim$X1)
+max2000_rank_dim$X3<- gsub("[^0-9]", "", max2000_rank_dim$X3)
+random_from_wiki_2000_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_dim$X1)
+random_from_wiki_2000_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_dim$X3)
+random1_dim$X1<- gsub("[^0-9]", "",random1_dim$X1)
+random1_dim$X3<- gsub("[^0-9]", "",random1_dim$X3)
+random2_dim$X1<- gsub("[^0-9]", "",random2_dim$X1)
+random2_dim$X3<- gsub("[^0-9]", "",random2_dim$X3)
+random3_dim$X1<- gsub("[^0-9]", "",random3_dim$X1)
+random3_dim$X3<- gsub("[^0-9]", "",random3_dim$X3)
+random4_dim$X1<- gsub("[^0-9]", "",random4_dim$X1)
+random4_dim$X3<- gsub("[^0-9]", "",random4_dim$X3)
+random5_dim$X1<- gsub("[^0-9]", "",random5_dim$X1)
+random5_dim$X3<- gsub("[^0-9]", "",random5_dim$X3)
+random6_dim$X1<- gsub("[^0-9]", "",random6_dim$X1)
+random6_dim$X3<- gsub("[^0-9]", "",random6_dim$X3)
+
+city_dim<- matrix(as.numeric(city2000_rank_dim$X3),ncol=20,byrow=F)
+max_dim<- matrix(as.numeric(max2000_rank_dim$X3),ncol=20,byrow=F)
+random_from_wiki_dim<- matrix(as.numeric(random_from_wiki_2000_dim$X3), ncol=20, byrow=F)
+random1_dim<- matrix(as.numeric(random1_dim$X3), ncol=20, byrow=F)
+random2_dim<- matrix(as.numeric(random2_dim$X3), ncol=20, byrow=F)
+random3_dim<- matrix(as.numeric(random3_dim$X3), ncol=20, byrow=F)
+random4_dim<- matrix(as.numeric(random4_dim$X3), ncol=20, byrow=F)
+random5_dim<- matrix(as.numeric(random5_dim$X3), ncol=20, byrow=F)
+random6_dim<- matrix(as.numeric(random6_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(city_dim,max_dim, random_from_wiki_dim, random1_dim, random2_dim, random3_dim, random4_dim, random5_dim, random6_dim), dim=c(20,20,9))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:3])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,4:9])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,4]-x2[1,j])^2,(large_scale[i,j,5]-x2[1,j])^2,(large_scale[i,j,6]-x2[1,j])^2,
+                 (large_scale[i,j,7]-x2[1,j])^2,(large_scale[i,j,8]-x2[1,j])^2,(large_scale[i,j,9]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/7*1/9
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+
+z<- qnorm(pt(t,100))
+
+x <- seq(-2,2,length=1000)
+y <- dnorm(x, mean=0, sd=1)
+hist(z,30)
+lines(x,y)
+
+sum(z>qnorm(1-0.05/400),na.rm = T)
+
+
+
+```
+
+### large scale testing (null distribution)
+```{r}
+random1_dim<- read_csv("~/random1_dim.txt", col_names = FALSE)
+random2_dim<- read_csv("~/random2_dim.txt", col_names = FALSE)
+random3_dim<- read_csv("~/random3_dim.txt", col_names = FALSE)
+random4_dim<- read_csv("~/random4_dim.txt", col_names = FALSE)
+random5_dim<- read_csv("~/random5_dim.txt", col_names = FALSE)
+random6_dim<- read_csv("~/random6_dim.txt", col_names = FALSE)
+random7_dim<- read_csv("~/random7_dim.txt", col_names = FALSE)
+random8_dim<- read_csv("~/random8_dim.txt", col_names = FALSE)
+random9_dim<- read_csv("~/random9_dim.txt", col_names = FALSE)
+random10_dim<- read_csv("~/random10_dim.txt", col_names = FALSE)
+random11_dim<- read_csv("~/random11_dim.txt", col_names = FALSE)
+random12_dim<- read_csv("~/random12_dim.txt", col_names = FALSE)
+random13_dim<- read_csv("~/random13_dim.txt", col_names = FALSE)
+random14_dim<- read_csv("~/random14_dim.txt", col_names = FALSE)
+random15_dim<- read_csv("~/random15_dim.txt", col_names = FALSE)
+
+random1_dim$X1<- gsub("[^0-9]", "",random1_dim$X1)
+random1_dim$X3<- gsub("[^0-9]", "",random1_dim$X3)
+random2_dim$X1<- gsub("[^0-9]", "",random2_dim$X1)
+random2_dim$X3<- gsub("[^0-9]", "",random2_dim$X3)
+random3_dim$X1<- gsub("[^0-9]", "",random3_dim$X1)
+random3_dim$X3<- gsub("[^0-9]", "",random3_dim$X3)
+random4_dim$X1<- gsub("[^0-9]", "",random4_dim$X1)
+random4_dim$X3<- gsub("[^0-9]", "",random4_dim$X3)
+random5_dim$X1<- gsub("[^0-9]", "",random5_dim$X1)
+random5_dim$X3<- gsub("[^0-9]", "",random5_dim$X3)
+random6_dim$X1<- gsub("[^0-9]", "",random6_dim$X1)
+random6_dim$X3<- gsub("[^0-9]", "",random6_dim$X3)
+random7_dim$X1<- gsub("[^0-9]", "",random7_dim$X1)
+random7_dim$X3<- gsub("[^0-9]", "",random7_dim$X3)
+random8_dim$X1<- gsub("[^0-9]", "",random8_dim$X1)
+random8_dim$X3<- gsub("[^0-9]", "",random8_dim$X3)
+random9_dim$X1<- gsub("[^0-9]", "",random9_dim$X1)
+random9_dim$X3<- gsub("[^0-9]", "",random9_dim$X3)
+random10_dim$X1<- gsub("[^0-9]", "",random10_dim$X1)
+random10_dim$X3<- gsub("[^0-9]", "",random10_dim$X3)
+random11_dim$X1<- gsub("[^0-9]", "",random11_dim$X1)
+random11_dim$X3<- gsub("[^0-9]", "",random11_dim$X3)
+random12_dim$X1<- gsub("[^0-9]", "",random12_dim$X1)
+random12_dim$X3<- gsub("[^0-9]", "",random12_dim$X3)
+random13_dim$X1<- gsub("[^0-9]", "",random13_dim$X1)
+random13_dim$X3<- gsub("[^0-9]", "",random13_dim$X3)
+random14_dim$X1<- gsub("[^0-9]", "",random14_dim$X1)
+random14_dim$X3<- gsub("[^0-9]", "",random14_dim$X3)
+random15_dim$X1<- gsub("[^0-9]", "",random15_dim$X1)
+random15_dim$X3<- gsub("[^0-9]", "",random15_dim$X3)
+
+random1_dim<- matrix(as.numeric(random1_dim$X3), ncol=20, byrow=F)
+random2_dim<- matrix(as.numeric(random2_dim$X3), ncol=20, byrow=F)
+random3_dim<- matrix(as.numeric(random3_dim$X3), ncol=20, byrow=F)
+random4_dim<- matrix(as.numeric(random4_dim$X3), ncol=20, byrow=F)
+random5_dim<- matrix(as.numeric(random5_dim$X3), ncol=20, byrow=F)
+random6_dim<- matrix(as.numeric(random6_dim$X3), ncol=20, byrow=F)
+random7_dim<- matrix(as.numeric(random7_dim$X3), ncol=20, byrow=F)
+random8_dim<- matrix(as.numeric(random8_dim$X3), ncol=20, byrow=F)
+random9_dim<- matrix(as.numeric(random9_dim$X3), ncol=20, byrow=F)
+random10_dim<- matrix(as.numeric(random10_dim$X3), ncol=20, byrow=F)
+random11_dim<- matrix(as.numeric(random11_dim$X3), ncol=20, byrow=F)
+random12_dim<- matrix(as.numeric(random12_dim$X3), ncol=20, byrow=F)
+random13_dim<- matrix(as.numeric(random13_dim$X3), ncol=20, byrow=F)
+random14_dim<- matrix(as.numeric(random14_dim$X3), ncol=20, byrow=F)
+random15_dim<- matrix(as.numeric(random15_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(random1_dim, random2_dim, random3_dim, random4_dim, random5_dim, random6_dim, random7_dim, random8_dim, random9_dim, random10_dim, random11_dim, random12_dim, random13_dim, random14_dim, random15_dim), dim=c(20,20,15))
+
+
+allt<- array(0,dim=c(20,20,500))
+for (m in 1:500){
+
+group1<- sample(1:15,7)  
+all<- seq(1,15,1)
+group2<- all[is.na(pmatch(all,group1))]
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,group1])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,group2])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,group1[1]]-x1[1,j])^2,(large_scale[i,j,group1[2]]-x1[1,j])^2,(large_scale[i,j,group1[3]]-x1[1,j])^2,(large_scale[i,j,group1[4]]-x1[1,j])^2,(large_scale[i,j,group1[5]]-x1[1,j])^2,(large_scale[i,j,group1[6]]-x1[1,j])^2,(large_scale[i,j,group1[7]]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,group2[1]]-x2[1,j])^2,(large_scale[i,j,group2[2]]-x2[1,j])^2,(large_scale[i,j,group2[3]]-x2[1,j])^2,
+                 (large_scale[i,j,group2[4]]-x2[1,j])^2,(large_scale[i,j,group2[5]]-x2[1,j])^2,(large_scale[i,j,group2[6]]-x2[1,j])^2,(large_scale[i,j,group2[7]]-x2[1,j])^2,(large_scale[i,j,group2[8]]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/13*1/15
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+allt[,,m] <- t
+print(m)
+}
+
+allt[is.na(allt)]<- 0
+cvt<- matrix(0,ncol=20,nrow=20)
+
+for (i in 1:20){
+  for (j in 1:20){
+    cvt[i,j]<- mean(allt[i,j,1:20])
+  }
+}
+
+#hist(allt)
+z<- qnorm(pt(cvt,13))
+z_null<- z
+z_null[is.na(z_null)] <- 0
+hist(z_null,30)
+
+qqnorm(z_null)
+qqline(z_null)
+```
+
+
+### large scale testing (15 samples)
+```{r}
+wiki_sample1_dim<- read_csv("~/wiki_sample1_dim.txt", col_names = FALSE)
+wiki_sample2_dim<- read_csv("~/wiki_sample2_dim.txt", col_names = FALSE)
+wiki_sample3_dim<- read_csv("~/wiki_sample3_dim.txt", col_names = FALSE)
+wiki_sample4_dim<- read_csv("~/wiki_sample4_dim.txt", col_names = FALSE)
+wiki_sample5_dim<- read_csv("~/wiki_sample5_dim.txt", col_names = FALSE)
+wiki_sample6_dim<- read_csv("~/wiki_sample6_dim.txt", col_names = FALSE)
+wiki_sample7_dim<- read_csv("~/wiki_sample7_dim.txt", col_names = FALSE)
+wiki_sample8_dim<- read_csv("~/wiki_sample8_dim.txt", col_names = FALSE)
+wiki_sample9_dim<- read_csv("~/wiki_sample9_dim.txt", col_names = FALSE)
+wiki_sample10_dim<- read_csv("~/wiki_sample10_dim.txt", col_names = FALSE)
+wiki_sample11_dim<- read_csv("~/wiki_sample11_dim.txt", col_names = FALSE)
+wiki_sample12_dim<- read_csv("~/wiki_sample12_dim.txt", col_names = FALSE)
+wiki_sample13_dim<- read_csv("~/wiki_sample13_dim.txt", col_names = FALSE)
+wiki_sample14_dim<- read_csv("~/wiki_sample14_dim.txt", col_names = FALSE)
+wiki_sample15_dim<- read_csv("~/wiki_sample15_dim.txt", col_names = FALSE)
+
+wiki_sample1_dim$X1<- gsub("[^0-9]", "",wiki_sample1_dim$X1)
+wiki_sample1_dim$X3<- gsub("[^0-9]", "",wiki_sample1_dim$X3)
+wiki_sample2_dim$X1<- gsub("[^0-9]", "",wiki_sample2_dim$X1)
+wiki_sample2_dim$X3<- gsub("[^0-9]", "",wiki_sample2_dim$X3)
+wiki_sample3_dim$X1<- gsub("[^0-9]", "",wiki_sample3_dim$X1)
+wiki_sample3_dim$X3<- gsub("[^0-9]", "",wiki_sample3_dim$X3)
+wiki_sample4_dim$X1<- gsub("[^0-9]", "",wiki_sample4_dim$X1)
+wiki_sample4_dim$X3<- gsub("[^0-9]", "",wiki_sample4_dim$X3)
+wiki_sample5_dim$X1<- gsub("[^0-9]", "",wiki_sample5_dim$X1)
+wiki_sample5_dim$X3<- gsub("[^0-9]", "",wiki_sample5_dim$X3)
+wiki_sample6_dim$X1<- gsub("[^0-9]", "",wiki_sample6_dim$X1)
+wiki_sample6_dim$X3<- gsub("[^0-9]", "",wiki_sample6_dim$X3)
+wiki_sample7_dim$X1<- gsub("[^0-9]", "",wiki_sample7_dim$X1)
+wiki_sample7_dim$X3<- gsub("[^0-9]", "",wiki_sample7_dim$X3)
+wiki_sample8_dim$X1<- gsub("[^0-9]", "",wiki_sample8_dim$X1)
+wiki_sample8_dim$X3<- gsub("[^0-9]", "",wiki_sample8_dim$X3)
+wiki_sample9_dim$X1<- gsub("[^0-9]", "",wiki_sample9_dim$X1)
+wiki_sample9_dim$X3<- gsub("[^0-9]", "",wiki_sample9_dim$X3)
+wiki_sample10_dim$X1<- gsub("[^0-9]", "",wiki_sample10_dim$X1)
+wiki_sample10_dim$X3<- gsub("[^0-9]", "",wiki_sample10_dim$X3)
+wiki_sample11_dim$X1<- gsub("[^0-9]", "",wiki_sample11_dim$X1)
+wiki_sample11_dim$X3<- gsub("[^0-9]", "",wiki_sample11_dim$X3)
+wiki_sample12_dim$X1<- gsub("[^0-9]", "",wiki_sample12_dim$X1)
+wiki_sample12_dim$X3<- gsub("[^0-9]", "",wiki_sample12_dim$X3)
+wiki_sample13_dim$X1<- gsub("[^0-9]", "",wiki_sample13_dim$X1)
+wiki_sample13_dim$X3<- gsub("[^0-9]", "",wiki_sample13_dim$X3)
+wiki_sample14_dim$X1<- gsub("[^0-9]", "",wiki_sample14_dim$X1)
+wiki_sample14_dim$X3<- gsub("[^0-9]", "",wiki_sample14_dim$X3)
+wiki_sample15_dim$X1<- gsub("[^0-9]", "",wiki_sample15_dim$X1)
+wiki_sample15_dim$X3<- gsub("[^0-9]", "",wiki_sample15_dim$X3)
+
+wiki_sample1_dim<- matrix(as.numeric(wiki_sample1_dim$X3), ncol=20, byrow=F)
+wiki_sample2_dim<- matrix(as.numeric(wiki_sample2_dim$X3), ncol=20, byrow=F)
+wiki_sample3_dim<- matrix(as.numeric(wiki_sample3_dim$X3), ncol=20, byrow=F)
+wiki_sample4_dim<- matrix(as.numeric(wiki_sample4_dim$X3), ncol=20, byrow=F)
+wiki_sample5_dim<- matrix(as.numeric(wiki_sample5_dim$X3), ncol=20, byrow=F)
+wiki_sample6_dim<- matrix(as.numeric(wiki_sample6_dim$X3), ncol=20, byrow=F)
+wiki_sample7_dim<- matrix(as.numeric(wiki_sample7_dim$X3), ncol=20, byrow=F)
+wiki_sample8_dim<- matrix(as.numeric(wiki_sample8_dim$X3), ncol=20, byrow=F)
+wiki_sample9_dim<- matrix(as.numeric(wiki_sample9_dim$X3), ncol=20, byrow=F)
+wiki_sample10_dim<- matrix(as.numeric(wiki_sample10_dim$X3), ncol=20, byrow=F)
+wiki_sample11_dim<- matrix(as.numeric(wiki_sample11_dim$X3), ncol=20, byrow=F)
+wiki_sample12_dim<- matrix(as.numeric(wiki_sample12_dim$X3), ncol=20, byrow=F)
+wiki_sample13_dim<- matrix(as.numeric(wiki_sample13_dim$X3), ncol=20, byrow=F)
+wiki_sample14_dim<- matrix(as.numeric(wiki_sample14_dim$X3), ncol=20, byrow=F)
+wiki_sample15_dim<- matrix(as.numeric(wiki_sample15_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(wiki_sample1_dim, wiki_sample2_dim, wiki_sample3_dim, wiki_sample4_dim, wiki_sample5_dim, wiki_sample6_dim, wiki_sample7_dim, wiki_sample8_dim, wiki_sample9_dim, wiki_sample10_dim, wiki_sample11_dim, wiki_sample12_dim, wiki_sample13_dim, wiki_sample14_dim, wiki_sample15_dim, random1_dim, random2_dim, random3_dim, random4_dim, random5_dim, random6_dim, random7_dim, random8_dim, random9_dim, random10_dim, random11_dim, random12_dim, random13_dim, random14_dim, random15_dim), dim=c(20,20,30))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:15])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,16:30])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2,(large_scale[i,j,5]-x1[1,j])^2,(large_scale[i,j,6]-x1[1,j])^2,(large_scale[i,j,7]-x1[1,j])^2,(large_scale[i,j,8]-x1[1,j])^2,(large_scale[i,j,9]-x1[1,j])^2,(large_scale[i,j,10]-x1[1,j])^2,(large_scale[i,j,11]-x1[1,j])^2,(large_scale[i,j,12]-x1[1,j])^2,(large_scale[i,j,13]-x1[1,j])^2,(large_scale[i,j,14]-x1[1,j])^2, (large_scale[i,j,15]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,16]-x2[1,j])^2,(large_scale[i,j,17]-x2[1,j])^2,(large_scale[i,j,18]-x2[1,j])^2,
+                 (large_scale[i,j,19]-x2[1,j])^2,(large_scale[i,j,20]-x2[1,j])^2,(large_scale[i,j,21]-x2[1,j])^2,(large_scale[i,j,22]-x2[1,j])^2,(large_scale[i,j,23]-x2[1,j])^2,(large_scale[i,j,24]-x2[1,j])^2,(large_scale[i,j,25]-x2[1,j])^2,(large_scale[i,j,26]-x2[1,j])^2,(large_scale[i,j,27]-x2[1,j])^2,(large_scale[i,j,28]-x2[1,j])^2,(large_scale[i,j,29]-x2[1,j])^2,(large_scale[i,j,30]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/28*1/30
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,28))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=10) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.05/400),na.rm = T)
+table<- z
+ifelse(z>quantile(z_null,1-0.05/400),1,0)
+
+```
+
+### matching distance RIVET 20 bins
+```{r}
+### 6 random data sets
+random.all<- c(0.05263730484,0.05263554452,0.05263555144,0.05263565845,0.05263554452,0.05263554452,0.05263566538)
+null_mean<- c()
+for (i in 1:100){
+  samp<- sample(1:length(random.all),4)
+  avg<- mean(random.all[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,20)
+plot(density(null_mean))
+
+### 50 random data sets
+random.all<- c(0.052637304838865979, 0.05263554798287183, 0.052635658454797452, 0.052635661917669489, 0.052635665380037465, 0.05263555144507754, 0.052635661917333133, 0.052635654991077183, 0.052635547981816758, 0.052635544520139549, 0.052635658454797452, 0.05263554451909775, 0.052635551444813529, 0.052637308301975869, 0.052635551445341065, 0.052635651529730335, 0.052635551445473314, 0.052635887345161864, 0.05263566191800749, 0.052635541056233665, 0.05263554798287183, 0.052635887344897853, 0.05263566538003623, 0.052635654991077183, 0.052635654991077183, 0.052637304838995744, 0.052635547982344294, 0.10526434365903542, 0.052635665380205636, 0.052637304838865979, 0.052639866495013336, 0.05263554451831997, 0.052635547983004086, 0.052635551445736846, 0.0526355445200073, 0.052637308301975869, 0.052635661917333133, 0.052637308302334748, 0.05263554798287183, 0.052640450583449926, 0.052635544518015644, 0.052635544519111024, 0.052635654991077183, 0.052635661917669489, 0.052635654991077183, 0.052635661917501304, 0.052635654991077183, 0.052637301377972005, 0.052635551445473314, 0.052635547982608305)
+
+random.all<- c(0.052637304838865979, 0.05263554798287183, 0.052635658454797452, 0.052635661917669489, 0.052635665380037465, 0.05263555144507754, 0.052635661917333133, 0.052635654991077183, 0.052635547981816758, 0.052635544520139549, 0.052635658454797452, 0.05263554451909775, 0.052635551444813529, 0.052637308301975869, 0.052635551445341065, 0.052635651529730335, 0.052635551445473314, 0.052635887345161864, 0.05263566191800749, 0.052635541056233665, 0.05263554798287183, 0.052635887344897853, 0.05263566538003623, 0.052635654991077183, 0.052635654991077183, 0.052637304838995744, 0.052635547982344294, 0.052635665380205636, 0.052637304838865979, 0.052639866495013336, 0.05263554451831997, 0.052635547983004086, 0.052635551445736846, 0.0526355445200073, 0.052637308301975869, 0.052635661917333133, 0.052637308302334748, 0.05263554798287183, 0.052640450583449926, 0.052635544518015644, 0.052635544519111024, 0.052635654991077183, 0.052635661917669489, 0.052635654991077183, 0.052635661917501304, 0.052635654991077183, 0.052637301377972005, 0.052635551445473314, 0.052635547982608305)
+
+
+hist(random.all)
+
+null_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(random.all),50, replace=T)
+  avg<- mean(random.all[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,100,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+mtext(c("Low","High"),side=1,line=2,at=c(5,7))
+
+h <- hist(null_mean, breaks = 100, plot=FALSE)
+den<- h$counts/sum(h$counts)
+hist(null_mean, breaks = 100,freq=F)
+lines(h$mids,den,col="red")
+
+
+lines(density(null_mean), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red")
+plot(density(null_mean),prob=T)
+
+mean(null_mean)
+sd(null_mean)
+
+### one sided
+quantile(null_mean, 0.95)
+
+
+wiki<- c(0.36842053616836878, 0.36842145685023331, 0.36842097988480321, 0.36842155380322877, 0.36842155380511393, 0.36842135989917335, 0.36842145685211797, 0.36842135565294309, 0.36842140837563925, 0.36842093145000943, 0.36842089584858445, 0.36842079889575546, 0.3684208993733824, 0.36842150532860962, 0.36842116599343683, 0.36842089582315263, 0.36842108560211301, 0.36842126294439487, 0.36842085089516557, 0.36842137989810964, 0.36842152956686014, 0.36842155380511393, 0.36842137989810964, 0.36842152956497498, 0.36841982982695143, 0.36842052467350106, 0.36842089937149775, 0.3684223569029465, 0.36842179537165121, 0.36842209329380077, 0.36842157804148562, 0.36842100412302237, 0.36842100416760459, 0.36842135989728869, 0.36842152956686014, 0.36842181960992726, 0.36842133565906038, 0.36842157804337083, 0.36842181960992726, 0.36842181961685949, 0.36842140837563925, 0.36842155380322877, 0.36842053619903831, 0.36842155380511393, 0.36842155380511393, 0.36842157804337083, 0.36842082313632146, 0.36842150532672446, 0.36842077465991968, 0.36842116599343683, 0.36842070583568698, 0.36842116599155217, 0.36842300850970577, 0.36842150532672446, 0.36842031802490294, 0.36842126294439487, 0.36842221147223925, 0.36842152956686014, 0.36842235689955249, 0.36842093145000943, 0.36842155380511393, 0.36842131142272005, 0.36842106904064509, 0.36842143261199245, 0.36842128718449813, 0.36841919171591142, 0.3684214041294146, 0.36842143261199245, 0.36842155380511393, 0.36842152956686014, 0.36842059738104938, 0.36842152956686014, 0.36842157804337083, 0.36842157804337083, 0.36842152956686014, 0.36842097992643813, 0.36842100414236778, 0.36842100412302237, 0.36842160227974574, 0.36842101288748719, 0.36842077818069147, 0.36842070583568698, 0.36842203256356792, 0.36842155380511393, 0.36842121446985177,
+0.36842121446985177, 0.36842152956686014, 0.36842157804337083, 0.36842157804337083, 0.36842152956686014, 0.36842097992643813, 0.36842100414236778, 0.36842100412302237, 0.36842160227974574, 0.36842101288748719, 0.36842077818069147, 0.36842070583568698, 0.36842203256356792, 0.36842155380511393, 0.36842121446985177)
+
+length(wiki)
+```
+
+### matching distance RIVTE 40 bins
+```{r}
+random.all<- c(0.051280123180007846, 0.05128506115036871, 0.051286029648012897, 0.051283277109588576, 0.042837829171406223, 0.047398058004579892, 0.025645178775253272, 0.047398058004044799, 0.025645178775248082, 0.051286029645721973, 0.047392927235902119, 0.051285061150254947, 0.025645180419231865, 0.051286029647931365, 0.051285064437872625, 0.047392927236296553, 0.04017070204074491, 0.05128345896371557, 0.051283277111490881, 0.047398058003717609, 0.047395492620370197, 0.051285758906826122, 0.051285436708857338, 0.051285057862526233, 0.047398058003608128, 0.05128203291647588, 0.05128543344123096, 0.076920184771176486, 0.025645180419231865, 0.025647415770053684, 0.025649112840357386, 0.025645178775003916, 0.051285433441370994, 0.05110869423520388, 0.025645178775065988, 0.025647415770246908, 0.047392927235902119, 0.051286029647849028, 0.047396518772377487, 0.047398058003717602, 0.025645178775065988, 0.051285061150254947, 0.047398058003717602, 0.025645998636834266, 0.051285131632619975, 0.025645178775255812, 0.051285918634240597, 0.051287633904204523, 0.051285436727317078, 0.047395492619434661)
+
+hist(random.all)
+
+null_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(random.all),50, replace=T)
+  avg<- mean(random.all[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,100,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+mtext(c("Low","High"),side=1,line=2,at=c(5,7))
+
+mean(null_mean)
+sd(null_mean)
+
+### one sided
+quantile(null_mean, 0.95)
+
+wiki<- c(0.37179444049666438, 0.37179514978339301, 0.37179461564494681, 0.371794758640481, 0.37179545216380572, 0.37179533299864254, 0.35897466250753296, 0.371796039939014, 0.358976399639928, 0.3717967761449576, 0.37179545216380572, 0.37179526149958131, 0.37179444049767851, 0.3589763996409836, 0.35898694783335094, 0.35897774620412565, 0.35897423043602389, 0.35897406890964684, 0.3717967523096557, 0.37179540449773124, 0.35897537533759122, 0.37179540449868254)
+```
+
+
+### H1 matching distance
+```{r}
+random.all<- c(0.026317767066011837, 0.05262602321660155, 0.026317761871170655, 0.026317770529483267, 0.026317753214019544, 0.026317763603757413, 0.02631776706546405)
+
+#random.all<- c(0.026317767066011837, 0.026317761871170655, 0.026317770529483267, 0.026317753214019544, 0.026317763603757413, 0.02631776706546405)
+
+hist(random.all)
+
+null_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(random.all),6, replace=T)
+  avg<- mean(random.all[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+#mtext(c("Low","High"),side=1,line=2,at=c(5,7))
+
+
+mean(null_mean)
+sd(null_mean)
+
+### one sided
+quantile(null_mean, 0.95)
+
+
+wiki<- c(0.078948379552714595, 0.052633079368633776, 0.052631459598085316, 0.052630863522306552, 0.052626685438336582, 0.052621268354548931, 0.078946076868128087, 0.078947439291137469, 0.052633397938133625, 0.052642915283775335, 0.052630479176139396, 0.05263044141418665, 0.07448394178153088, 0.052633051665974456, 0.052632116429217522)
+
+```
+
+### Distribution of bar lengths
+```{r}
+random1_bar<- c(rep(1.73951-0.102324,54),rep(1.63718-0.102324,1108),rep(1.53486-0.102324,819),rep(1.43253-0.102324,18))
+random2_bar<- c(rep(1.73951-0.102324,69),rep(1.63718-0.102324,1074),rep(1.53486-0.102324,843),rep(1.43253-0.102324,13))
+random3_bar<- c(rep(1.73949-0.102323,45),rep(1.73949-0.102324,7),rep(1.63717-0.102323,978),rep(1.63717-0.102324,49),rep(1.53485-0.102323,864),rep(1.53485-0.102324,7),rep(1.43252-0.102323,12),rep(1.43252-0.102324,1))
+random4_bar<- c(rep(1.73951-0.102323,50),rep(1.63718-0.102324,1034),rep(1.53486-0.102323,902),rep(1.43253-0.102324,13))
+random5_bar<- c(rep(1.73951-0.102323,50),rep(1.63718-0.102324,1092),rep(1.53486-0.102323,844),rep(1.43253-0.102324,13))
+random_bar<- c(random1_bar,random2_bar,random3_bar,random4_bar,random5_bar)
+hist(random_bar)
+
+null_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(random_bar),9959, replace=T)
+  avg<- mean(random_bar[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.05),lty="dotted",col="red",lwd=2)
+
+wiki1_bar<- c(rep(1.63718-0.102324,1),rep(1.53485-0.102324,86),rep(1.43253-0.102324,387),rep(1.33021-0.102324,478),rep(1.22788-0.102324,400),rep(1.12556-0.102324,201),rep(1.02324-0.102324,113),rep(0.920912-0.102324,67),rep(0.818589-0.102324,62),rep(0.716265-0.102324,50),rep(0.613942-0.102324,31),rep(0.511618-0.102324,34),rep(0.409294-0.102324,54),rep(0.306971-0.102324,35))
+
+wiki2_bar<- c(rep(1.63715-0.102322,1),rep(1.53482-0.102322,81), rep(1.53482-0.102324,3),rep(1.4325-0.102322,343),rep(1.4325-0.102324,17),rep(1.33018-0.102322,464),rep(1.33018-0.102324,22),rep(1.22786-0.102322,366),rep(1.22786-0.102324,21),rep(1.12554-0.102322,229),rep(1.12554-0.102324,8),rep(1.02322-0.102322,101), rep(1.02322-0.102324,5), rep(0.920895-0.102322,61),rep(0.920895-0.102324,5), rep(0.818573-0.102322,56), rep(0.818573-0.102324,5), rep(0.716252-0.102322,50),	rep(0.716252-0.102324,3), rep(0.61393-0.102322,27), rep(0.61393-0.102324,4), rep(0.511608-0.102322,47), rep(0.511608-0.102324,3), rep(0.409287-0.102322,41), rep(0.409287-0.102324,3), rep(0.306965-0.102322,30), rep(0.204643-0.102322,2), rep(0.204643-0.102324,1))
+
+wiki3_bar<- c(rep(-(0.102321-1.63714),1),rep(-(0.102324-1.63714),1), rep(-(0.102321-1.53482),91),rep(-(0.102324-1.53482),4), rep(-(0.102321-1.4325),339),rep(-(0.102324-1.4325),21), rep(-(0.102321-1.33018),456), rep(-(0.102324-1.33018),26), rep(-(0.102321-1.22786),339), rep(-(0.102324-1.22786),9), rep(-(0.102321-1.12554),221), rep(-(0.102324-1.12554),15), rep(-(0.102321-1.02321),123), rep(-(0.102324-1.02321),5), rep(-(0.102321-0.920893) ,75), rep(-(0.102324-0.920893),6), rep(-(0.102321-0.818572),64), rep(-(0.102324- 0.818572),2), rep(-(0.102321-0.71625),45), rep(-(0.102324-0.71625),4), rep(-c(0.102321-0.613929),39), rep(-c(0.102324-0.613929),2), rep(-(0.102321- 0.511607),28), rep(-(0.102324-0.511607),3), rep(-(0.102321-0.409286),48), rep	(-(0.102324-0.409286), 2), rep(-(0.102321-0.306964),30))
+
+wiki4_bar<- c(rep(-(0.102324-1.63717),1), rep(-(0.102323-1.53484),75), rep(-(0.102324-1.53484),7), rep(-(0.102323-1.43252),373), rep(-(0.102324-1.43252),17), rep(-(0.102323-1.3302),472), rep(-(0.102324-1.3302 ), 22), rep(-(0.102323-1.22787),362), rep(-(0.102324-1.22787),22), rep(-(0.102323-1.12555), 217), rep(-(0.102324-1.12555),9), rep(-(0.102323-1.02323), 102), rep(-(0.102324-1.02323),6), rep(-(0.102323-0.920905),71), rep(-(0.102324-0.920905),6), rep(-(0.102323-0.818583), 44), rep(-(0.102324-0.818583),3), rep(-(0.102323-0.71626),56), rep(-(0.102324-0.71626), 1), rep(-(0.102323-0.613937) ,21), rep(-(0.102324-0.613937),1), rep(-(0.102323-0.511614),35), rep(-(0.102324- 0.511614),3), rep(-(0.102323-0.409291),38), rep(-(0.102324-0.409291),1), rep(-(0.102323-0.306968),33), rep(-(0.102324-0.306968),1))	
+
+wiki5_bar<- c(rep(-(0.102323-1.63717),1), rep(-(0.102323-1.53485),95),rep(-(0.102324-1.53485),3), rep(-(0.102323-1.43252),351), rep(-(0.102324-1.43252),15), rep(-(0.102323-1.3302),452), rep(-(0.102324-1.3302),27), rep(-(0.102323-1.22788),370), rep(-(0.102324-1.22788),17), rep(-(0.102323-1.12556),202), rep(-(0.102324-1.12556),14), rep(-(0.102323-1.02323),119), rep(-(0.102324-1.02323),5), rep(-(0.102323-0.920909),76), rep(-(0.102324-0.920909),6), rep(-(0.102323-0.818586),62), rep(-(0.102324-0.818586),4), rep(-(0.102323-0.716262),40), rep(-(0.102324-0.716262),1), rep(-(0.102323-0.613939),30), rep(-(0.102324-0.613939),2), rep(-(0.102323-0.511616),31), rep(-(0.102324-0.511616),1), rep(-(0.102323-0.409293),32), rep(-(0.102324-0.409293),2), rep(-(0.102323-0.30697),37), rep(-(0.102324-0.30697),3),rep(-(0.102323-0.204646), 1))
+
+wiki_bar<- c(wiki1_bar, wiki2_bar, wiki3_bar, wiki4_bar, wiki5_bar)
+
+wiki_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(wiki_bar),9995, replace=T)
+  avg<- mean(wiki_bar[samp])
+  wiki_mean<- c(wiki_mean, avg)
+}
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(wiki_mean, adjust=2), col="red", lwd=3) 
+#abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+### Put both in the same plot
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance",xlim=c(1.0,1.5))
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.05),lty="dotted",col="red",lwd=2)
+
+```
+
+### bar length of the top 50 longest
+```{r}
+random1_bar_long<- sort(random1_bar, decreasing = T)
+random1_bar_long<- random1_bar_long[1:50]
+random2_bar_long<- sort(random2_bar, decreasing = T)
+random2_bar_long<- random2_bar_long[1:50]
+random3_bar_long<- sort(random3_bar, decreasing = T)
+random3_bar_long<- random3_bar_long[1:50]
+random4_bar_long<- sort(random4_bar, decreasing = T)
+random4_bar_long<- random4_bar_long[1:50]
+random5_bar_long<- sort(random5_bar, decreasing = T)
+random5_bar_long<- random5_bar_long[1:50]
+
+random_bar_long<- rbind(random1_bar_long, random2_bar_long, random3_bar_long, random4_bar_long, random5_bar_long)
+
+null_mean<- matrix(0,nrow=1000,ncol=50)
+for (i in 1:1000){
+  samp<- sample(1:nrow(random_bar_long),nrow(random_bar_long), replace=T)
+  avg<- apply(random_bar_long[samp,],2,mean)
+  null_mean[i,]<- avg
+}
+
+null_mean<- apply(null_mean,2,mean)
+
+# null_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(random_bar_long),length(random_bar_long), replace=T)
+#   avg<- mean(random_bar_long[samp])
+#   null_mean<- c(null_mean, avg)
+# }
+
+hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+wiki1_bar_long<- sort(wiki1_bar,decreasing = T)
+wiki1_bar_long<- wiki1_bar_long[1:50]
+wiki2_bar_long<- sort(wiki2_bar,decreasing = T)
+wiki2_bar_long<- wiki2_bar_long[1:50]
+wiki3_bar_long<- sort(wiki3_bar,decreasing = T)
+wiki3_bar_long<- wiki3_bar_long[1:50]
+wiki4_bar_long<- sort(wiki4_bar,decreasing = T)
+wiki4_bar_long<- wiki4_bar_long[1:50]
+wiki5_bar_long<- sort(wiki5_bar,decreasing = T)
+wiki5_bar_long<- wiki5_bar_long[1:50]
+
+wiki_bar_long<- rbind(wiki1_bar_long, wiki2_bar_long, wiki3_bar_long, wiki4_bar_long, wiki5_bar_long)
+
+wiki_mean<- matrix(0,nrow=1000,ncol=50)
+for (i in 1:1000){
+  samp<- sample(1:nrow(wiki_bar_long),nrow(wiki_bar_long), replace=T)
+  avg<- apply(wiki_bar_long[samp,],2,mean)
+  wiki_mean[i,]<- avg
+}
+
+wiki_mean<- apply(wiki_mean,2,mean)
+
+# wiki_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(wiki_bar_long),length(wiki_bar_long), replace=T)
+#   avg<- mean(wiki_bar_long[samp])
+#   wiki_mean<- c(wiki_mean, avg)
+# }
+
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+lines(density(wiki_mean, adjust=2), col="darkgreen", lwd=3) 
+
+a<- wiki1_bar_long[1:100]
+b<- random1_bar_long[1:100]
+a
+b
+
+```
+
+### Large scale testing on H1 for null
+```{r}
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random1_dim_H1<- read_csv("~/random1_H1_dim.txt", col_names = FALSE)
+random1_dim_H1$X1<- gsub("[^0-9]", "",random1_dim_H1$X1)
+random1_dim_H1$X3<- gsub("[^0-9]", "",random1_dim_H1$X3)
+random1_dim_H1<- as.data.frame(lapply(as.data.frame(random1_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random1_dim_H1$X1) & (zero_dim[i,2] == random1_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random1_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random1_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random2_dim_H1<- read_csv("~/random2_H1_dim.txt", col_names = FALSE)
+random2_dim_H1$X1<- gsub("[^0-9]", "",random2_dim_H1$X1)
+random2_dim_H1$X3<- gsub("[^0-9]", "",random2_dim_H1$X3)
+random2_dim_H1<- as.data.frame(lapply(as.data.frame(random2_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random2_dim_H1$X1) & (zero_dim[i,2] == random2_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random2_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random2_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random3_dim_H1<- read_csv("~/random3_H1_dim.txt", col_names = FALSE)
+random3_dim_H1$X1<- gsub("[^0-9]", "",random3_dim_H1$X1)
+random3_dim_H1$X3<- gsub("[^0-9]", "",random3_dim_H1$X3)
+random3_dim_H1<- as.data.frame(lapply(as.data.frame(random3_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random3_dim_H1$X1) & (zero_dim[i,2] == random3_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random3_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random3_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random4_dim_H1<- read_csv("~/random4_H1_dim.txt", col_names = FALSE)
+random4_dim_H1$X1<- gsub("[^0-9]", "",random4_dim_H1$X1)
+random4_dim_H1$X3<- gsub("[^0-9]", "",random4_dim_H1$X3)
+random4_dim_H1<- as.data.frame(lapply(as.data.frame(random4_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random4_dim_H1$X1) & (zero_dim[i,2] == random4_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random4_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random4_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random5_dim_H1<- read_csv("~/random5_H1_dim.txt", col_names = FALSE)
+random5_dim_H1$X1<- gsub("[^0-9]", "",random5_dim_H1$X1)
+random5_dim_H1$X3<- gsub("[^0-9]", "",random5_dim_H1$X3)
+random5_dim_H1<- as.data.frame(lapply(as.data.frame(random5_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random5_dim_H1$X1) & (zero_dim[i,2] == random5_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random5_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random5_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random6_dim_H1<- read_csv("~/random6_H1_dim.txt", col_names = FALSE)
+random6_dim_H1$X1<- gsub("[^0-9]", "",random6_dim_H1$X1)
+random6_dim_H1$X3<- gsub("[^0-9]", "",random6_dim_H1$X3)
+random6_dim_H1<- as.data.frame(lapply(as.data.frame(random6_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random6_dim_H1$X1) & (zero_dim[i,2] == random6_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random6_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random6_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random7_dim_H1<- read_csv("~/random7_H1_dim.txt", col_names = FALSE)
+random7_dim_H1$X1<- gsub("[^0-9]", "",random7_dim_H1$X1)
+random7_dim_H1$X3<- gsub("[^0-9]", "",random7_dim_H1$X3)
+random7_dim_H1<- as.data.frame(lapply(as.data.frame(random7_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random7_dim_H1$X1) & (zero_dim[i,2] == random7_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random7_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random7_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random8_dim_H1<- read_csv("~/random8_H1_dim.txt", col_names = FALSE)
+random8_dim_H1$X1<- gsub("[^0-9]", "",random8_dim_H1$X1)
+random8_dim_H1$X3<- gsub("[^0-9]", "",random8_dim_H1$X3)
+random8_dim_H1<- as.data.frame(lapply(as.data.frame(random8_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random8_dim_H1$X1) & (zero_dim[i,2] == random8_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random8_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random8_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random9_dim_H1<- read_csv("~/random9_H1_dim.txt", col_names = FALSE)
+random9_dim_H1$X1<- gsub("[^0-9]", "",random9_dim_H1$X1)
+random9_dim_H1$X3<- gsub("[^0-9]", "",random9_dim_H1$X3)
+random9_dim_H1<- as.data.frame(lapply(as.data.frame(random9_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random9_dim_H1$X1) & (zero_dim[i,2] == random9_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random9_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random9_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random10_dim_H1<- read_csv("~/random10_H1_dim.txt", col_names = FALSE)
+random10_dim_H1$X1<- gsub("[^0-9]", "",random10_dim_H1$X1)
+random10_dim_H1$X3<- gsub("[^0-9]", "",random10_dim_H1$X3)
+random10_dim_H1<- as.data.frame(lapply(as.data.frame(random10_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random10_dim_H1$X1) & (zero_dim[i,2] == random10_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random10_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random10_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random11_dim_H1<- read_csv("~/random11_H1_dim.txt", col_names = FALSE)
+random11_dim_H1$X1<- gsub("[^0-9]", "",random11_dim_H1$X1)
+random11_dim_H1$X3<- gsub("[^0-9]", "",random11_dim_H1$X3)
+random11_dim_H1<- as.data.frame(lapply(as.data.frame(random11_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random11_dim_H1$X1) & (zero_dim[i,2] == random11_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random11_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random11_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random12_dim_H1<- read_csv("~/random12_H1_dim.txt", col_names = FALSE)
+random12_dim_H1$X1<- gsub("[^0-9]", "",random12_dim_H1$X1)
+random12_dim_H1$X3<- gsub("[^0-9]", "",random12_dim_H1$X3)
+random12_dim_H1<- as.data.frame(lapply(as.data.frame(random12_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random12_dim_H1$X1) & (zero_dim[i,2] == random12_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random12_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random12_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random13_dim_H1<- read_csv("~/random13_H1_dim.txt", col_names = FALSE)
+random13_dim_H1$X1<- gsub("[^0-9]", "",random13_dim_H1$X1)
+random13_dim_H1$X3<- gsub("[^0-9]", "",random13_dim_H1$X3)
+random13_dim_H1<- as.data.frame(lapply(as.data.frame(random13_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random13_dim_H1$X1) & (zero_dim[i,2] == random13_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random13_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random13_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random14_dim_H1<- read_csv("~/random14_H1_dim.txt", col_names = FALSE)
+random14_dim_H1$X1<- gsub("[^0-9]", "",random14_dim_H1$X1)
+random14_dim_H1$X3<- gsub("[^0-9]", "",random14_dim_H1$X3)
+random14_dim_H1<- as.data.frame(lapply(as.data.frame(random14_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random14_dim_H1$X1) & (zero_dim[i,2] == random14_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random14_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random14_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random15_dim_H1<- read_csv("~/random15_H1_dim.txt", col_names = FALSE)
+random15_dim_H1$X1<- gsub("[^0-9]", "",random15_dim_H1$X1)
+random15_dim_H1$X3<- gsub("[^0-9]", "",random15_dim_H1$X3)
+random15_dim_H1<- as.data.frame(lapply(as.data.frame(random15_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random15_dim_H1$X1) & (zero_dim[i,2] == random15_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random15_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random15_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+
+### starting from here
+
+
+large_scale<- array(c(random1_dim_H1_all, random2_dim_H1_all, random3_dim_H1_all, random4_dim_H1_all, random5_dim_H1_all, random6_dim_H1_all, random7_dim_H1_all, random8_dim_H1_all, random9_dim_H1_all, random10_dim_H1_all, random11_dim_H1_all, random12_dim_H1_all, random13_dim_H1_all, random14_dim_H1_all, random15_dim_H1_all), dim=c(20,20,15))
+
+
+allt<- array(0,dim=c(20,20,500))
+for (m in 1:500){
+
+group1<- sample(1:15,7)  
+all<- seq(1,15,1)
+group2<- all[is.na(pmatch(all,group1))]
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,group1])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,group2])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,group1[1]]-x1[1,j])^2,(large_scale[i,j,group1[2]]-x1[1,j])^2,(large_scale[i,j,group1[3]]-x1[1,j])^2,(large_scale[i,j,group1[4]]-x1[1,j])^2,(large_scale[i,j,group1[5]]-x1[1,j])^2,(large_scale[i,j,group1[6]]-x1[1,j])^2,(large_scale[i,j,group1[7]]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,group2[1]]-x2[1,j])^2,(large_scale[i,j,group2[2]]-x2[1,j])^2,(large_scale[i,j,group2[3]]-x2[1,j])^2,
+                 (large_scale[i,j,group2[4]]-x2[1,j])^2,(large_scale[i,j,group2[5]]-x2[1,j])^2,(large_scale[i,j,group2[6]]-x2[1,j])^2,(large_scale[i,j,group2[7]]-x2[1,j])^2,(large_scale[i,j,group2[8]]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/13*1/15
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+allt[,,m] <- t
+print(m)
+}
+
+allt[is.na(allt)]<- 0
+cvt<- matrix(0,ncol=20,nrow=20)
+
+for (i in 1:20){
+  for (j in 1:20){
+    cvt[i,j]<- mean(allt[i,j,1:20])
+  }
+}
+
+#hist(allt)
+z<- qnorm(pt(cvt,13))
+z_null<- z
+z_null[is.na(z_null)] <- 0
+hist(z_null,30)
+
+qqnorm(z_null)
+qqline(z_null)
+```
+
+
+### large scale testing (15 samples)
+```{r}
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki1_dim_H1<- read_csv("~/wiki_sample1_H1_dim.txt", col_names = FALSE)
+wiki1_dim_H1$X1<- gsub("[^0-9]", "",wiki1_dim_H1$X1)
+wiki1_dim_H1$X3<- gsub("[^0-9]", "",wiki1_dim_H1$X3)
+wiki1_dim_H1<- as.data.frame(lapply(as.data.frame(wiki1_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki1_dim_H1$X1) & (zero_dim[i,2] == wiki1_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki1_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki1_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki2_dim_H1<- read_csv("~/wiki_sample2_H1_dim.txt", col_names = FALSE)
+wiki2_dim_H1$X1<- gsub("[^0-9]", "",wiki2_dim_H1$X1)
+wiki2_dim_H1$X3<- gsub("[^0-9]", "",wiki2_dim_H1$X3)
+wiki2_dim_H1<- as.data.frame(lapply(as.data.frame(wiki2_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki2_dim_H1$X1) & (zero_dim[i,2] == wiki2_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki2_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki2_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki3_dim_H1<- read_csv("~/wiki_sample3_H1_dim.txt", col_names = FALSE)
+wiki3_dim_H1$X1<- gsub("[^0-9]", "",wiki3_dim_H1$X1)
+wiki3_dim_H1$X3<- gsub("[^0-9]", "",wiki3_dim_H1$X3)
+wiki3_dim_H1<- as.data.frame(lapply(as.data.frame(wiki3_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki3_dim_H1$X1) & (zero_dim[i,2] == wiki3_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki3_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki3_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki4_dim_H1<- read_csv("~/wiki_sample4_H1_dim.txt", col_names = FALSE)
+wiki4_dim_H1$X1<- gsub("[^0-9]", "",wiki4_dim_H1$X1)
+wiki4_dim_H1$X3<- gsub("[^0-9]", "",wiki4_dim_H1$X3)
+wiki4_dim_H1<- as.data.frame(lapply(as.data.frame(wiki4_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki4_dim_H1$X1) & (zero_dim[i,2] == wiki4_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki4_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki4_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki5_dim_H1<- read_csv("~/wiki_sample5_H1_dim.txt", col_names = FALSE)
+wiki5_dim_H1$X1<- gsub("[^0-9]", "",wiki5_dim_H1$X1)
+wiki5_dim_H1$X3<- gsub("[^0-9]", "",wiki5_dim_H1$X3)
+wiki5_dim_H1<- as.data.frame(lapply(as.data.frame(wiki5_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki5_dim_H1$X1) & (zero_dim[i,2] == wiki5_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki5_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki5_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki6_dim_H1<- read_csv("~/wiki_sample6_H1_dim.txt", col_names = FALSE)
+wiki6_dim_H1$X1<- gsub("[^0-9]", "",wiki6_dim_H1$X1)
+wiki6_dim_H1$X3<- gsub("[^0-9]", "",wiki6_dim_H1$X3)
+wiki6_dim_H1<- as.data.frame(lapply(as.data.frame(wiki6_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki6_dim_H1$X1) & (zero_dim[i,2] == wiki6_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki6_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki6_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki7_dim_H1<- read_csv("~/wiki_sample7_H1_dim.txt", col_names = FALSE)
+wiki7_dim_H1$X1<- gsub("[^0-9]", "",wiki7_dim_H1$X1)
+wiki7_dim_H1$X3<- gsub("[^0-9]", "",wiki7_dim_H1$X3)
+wiki7_dim_H1<- as.data.frame(lapply(as.data.frame(wiki7_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki7_dim_H1$X1) & (zero_dim[i,2] == wiki7_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki7_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki7_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki8_dim_H1<- read_csv("~/wiki_sample8_H1_dim.txt", col_names = FALSE)
+wiki8_dim_H1$X1<- gsub("[^0-9]", "",wiki8_dim_H1$X1)
+wiki8_dim_H1$X3<- gsub("[^0-9]", "",wiki8_dim_H1$X3)
+wiki8_dim_H1<- as.data.frame(lapply(as.data.frame(wiki8_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki8_dim_H1$X1) & (zero_dim[i,2] == wiki8_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki8_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki8_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki9_dim_H1<- read_csv("~/wiki_sample9_H1_dim.txt", col_names = FALSE)
+wiki9_dim_H1$X1<- gsub("[^0-9]", "",wiki9_dim_H1$X1)
+wiki9_dim_H1$X3<- gsub("[^0-9]", "",wiki9_dim_H1$X3)
+wiki9_dim_H1<- as.data.frame(lapply(as.data.frame(wiki9_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki9_dim_H1$X1) & (zero_dim[i,2] == wiki9_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki9_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki9_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki10_dim_H1<- read_csv("~/wiki_sample10_H1_dim.txt", col_names = FALSE)
+wiki10_dim_H1$X1<- gsub("[^0-9]", "",wiki10_dim_H1$X1)
+wiki10_dim_H1$X3<- gsub("[^0-9]", "",wiki10_dim_H1$X3)
+wiki10_dim_H1<- as.data.frame(lapply(as.data.frame(wiki10_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki10_dim_H1$X1) & (zero_dim[i,2] == wiki10_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki10_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki10_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki11_dim_H1<- read_csv("~/wiki_sample11_H1_dim.txt", col_names = FALSE)
+wiki11_dim_H1$X1<- gsub("[^0-9]", "",wiki11_dim_H1$X1)
+wiki11_dim_H1$X3<- gsub("[^0-9]", "",wiki11_dim_H1$X3)
+wiki11_dim_H1<- as.data.frame(lapply(as.data.frame(wiki11_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki11_dim_H1$X1) & (zero_dim[i,2] == wiki11_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki11_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki11_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki12_dim_H1<- read_csv("~/wiki_sample12_H1_dim.txt", col_names = FALSE)
+wiki12_dim_H1$X1<- gsub("[^0-9]", "",wiki12_dim_H1$X1)
+wiki12_dim_H1$X3<- gsub("[^0-9]", "",wiki12_dim_H1$X3)
+wiki12_dim_H1<- as.data.frame(lapply(as.data.frame(wiki12_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki12_dim_H1$X1) & (zero_dim[i,2] == wiki12_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki12_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki12_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki13_dim_H1<- read_csv("~/wiki_sample13_H1_dim.txt", col_names = FALSE)
+wiki13_dim_H1$X1<- gsub("[^0-9]", "",wiki13_dim_H1$X1)
+wiki13_dim_H1$X3<- gsub("[^0-9]", "",wiki13_dim_H1$X3)
+wiki13_dim_H1<- as.data.frame(lapply(as.data.frame(wiki13_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki13_dim_H1$X1) & (zero_dim[i,2] == wiki13_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki13_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki13_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki14_dim_H1<- read_csv("~/wiki_sample14_H1_dim.txt", col_names = FALSE)
+wiki14_dim_H1$X1<- gsub("[^0-9]", "",wiki14_dim_H1$X1)
+wiki14_dim_H1$X3<- gsub("[^0-9]", "",wiki14_dim_H1$X3)
+wiki14_dim_H1<- as.data.frame(lapply(as.data.frame(wiki14_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki14_dim_H1$X1) & (zero_dim[i,2] == wiki14_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki14_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki14_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki15_dim_H1<- read_csv("~/wiki_sample15_H1_dim.txt", col_names = FALSE)
+wiki15_dim_H1$X1<- gsub("[^0-9]", "",wiki15_dim_H1$X1)
+wiki15_dim_H1$X3<- gsub("[^0-9]", "",wiki15_dim_H1$X3)
+wiki15_dim_H1<- as.data.frame(lapply(as.data.frame(wiki15_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki15_dim_H1$X1) & (zero_dim[i,2] == wiki15_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki15_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki15_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+large_scale<- array(c(wiki1_dim_H1_all, wiki2_dim_H1_all, wiki3_dim_H1_all, wiki4_dim_H1_all, wiki5_dim_H1_all, wiki6_dim_H1_all, wiki7_dim_H1_all, wiki8_dim_H1_all, wiki9_dim_H1_all, wiki10_dim_H1_all, wiki11_dim_H1_all, wiki12_dim_H1_all, wiki13_dim_H1_all, wiki14_dim_H1_all, wiki15_dim_H1_all, random1_dim_H1_all, random2_dim_H1_all, random3_dim_H1_all, random4_dim_H1_all, random5_dim_H1_all, random6_dim_H1_all, random7_dim_H1_all, random8_dim_H1_all, random9_dim_H1_all, random10_dim_H1_all, random11_dim_H1_all, random12_dim_H1_all, random13_dim_H1_all, random14_dim_H1_all, random15_dim_H1_all), dim=c(20,20,30))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:15])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,16:30])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2,(large_scale[i,j,5]-x1[1,j])^2,(large_scale[i,j,6]-x1[1,j])^2,(large_scale[i,j,7]-x1[1,j])^2,(large_scale[i,j,8]-x1[1,j])^2,(large_scale[i,j,9]-x1[1,j])^2,(large_scale[i,j,10]-x1[1,j])^2,(large_scale[i,j,11]-x1[1,j])^2,(large_scale[i,j,12]-x1[1,j])^2,(large_scale[i,j,13]-x1[1,j])^2,(large_scale[i,j,14]-x1[1,j])^2, (large_scale[i,j,15]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,16]-x2[1,j])^2,(large_scale[i,j,17]-x2[1,j])^2,(large_scale[i,j,18]-x2[1,j])^2,
+                 (large_scale[i,j,19]-x2[1,j])^2,(large_scale[i,j,20]-x2[1,j])^2,(large_scale[i,j,21]-x2[1,j])^2,(large_scale[i,j,22]-x2[1,j])^2,(large_scale[i,j,23]-x2[1,j])^2,(large_scale[i,j,24]-x2[1,j])^2,(large_scale[i,j,25]-x2[1,j])^2,(large_scale[i,j,26]-x2[1,j])^2,(large_scale[i,j,27]-x2[1,j])^2,(large_scale[i,j,28]-x2[1,j])^2,(large_scale[i,j,29]-x2[1,j])^2,(large_scale[i,j,30]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/28*1/30
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,28))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=10) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.025/400),na.rm = T)+sum(z<quantile(z_null,0.025/400),na.rm=T) ### 193
+table<- z
+table_01<- ifelse((z>quantile(z_null,1-0.025/400)|z<quantile(z_null,0.025/400)),1,0)
+
+```
+
+
+### Distribution of bar lengths (H1)
+```{r}
+random1_bar<- c(rep(13.6988-12.6283,122),rep(14.7693-13.6988,294))
+random2_bar<- c(rep(17.0605-15.99,109),rep(18.131-17.0605,400))
+random3_bar<- c(rep(1.85831-1.73,109),rep(1.98662-1.85831,320))
+random4_bar<- c(rep(12.5782-11.5076,82),rep(13.6487-12.5782,403),rep(14.7192-13.6487,2))
+random5_bar<- c(rep(1.63718-1.53485,102),rep(1.7395-1.63718,363),rep(1.84182-1.7395,1))
+random_bar<- c(random1_bar,random2_bar,random3_bar,random4_bar,random5_bar)
+hist(random_bar)
+
+null_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(random_bar),length(random_bar), replace=T)
+  avg<- mean(random_bar[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+wiki1_bar<- c(rep(-(10.4871-13.6987),1),rep(-(8.34612-10.4871),1),rep(-(11.5577-13.6987),19),rep(-(6.2051-7.27561),1),rep(-(7.27561-8.34612),5),rep(-(8.34612-9.41663),3),rep(-(9.41663-10.4871),5),rep(-(10.4871-11.5577),49),rep(-(11.5577-12.6282),115),rep(-(12.6282-13.6987),234),rep(-(13.6987-14.7692),49))		
+
+wiki2_bar<- c(rep(-(13.8491-15.9901),1),rep(-(14.9196-17.0606),21),rep(-(7.42596-8.49648),1),rep(-(9.567-10.6375),1),rep(-(10.6375-11.708),2),rep(-(11.708-12.7786),1),rep(-(12.7786-13.8491),10),rep(-(13.8491-14.9196),36),rep(-(14.9196-15.9901),108),rep(-(15.9901-17.0606),217),rep(-(17.0606-18.1312),37))
+
+wiki3_bar<- c(rep(-(1.47332-1.72993),2),rep(-(1.60162-1.85824),26),rep(-(1.72993-1.98654),2),rep(-(1.0884-1.21671),1),rep(-(1.21671-1.34501),6),rep(-(1.34501-1.47332),12),rep(-(1.47332-1.60162),28),rep(-(1.60162-1.72993),103),rep(-(1.72993-1.85824),216),rep(-(1.85824-1.98654),56),rep(-(1.15127-1.21671),1),rep(-(1.0884-1.15127),1))			
+
+wiki4_bar<- c(rep(-(10.4365-12.5775),20),rep(-(4.0137-5.08418),2),rep(-(6.15465-7.22512),5),rep(-(7.22512-8.2956),3),rep(-(8.2956-9.36607),15),rep(-(9.36607-10.4365),37),rep(-(10.4365-11.507),98),rep(-(11.507-12.5775),234),rep(-(12.5775-13.648),34),rep(-(0.902624-0.952714),1))			
+
+wiki5_bar<- c(rep(-(1.43235-1.63698),19),rep(-(1.37938-1.53467),2), rep(-(1.12542-1.22773),2), rep(-(1.22773-1.33004),20),rep(-(1.33004-1.43235),20),rep(-(1.43235-1.53467),134),rep(-(1.53467-1.63698),247),rep(-(1.63698-1.73929),43),rep(-(1.29926-1.33004),2),rep(-(1.12542-1.13904),1))			
+
+
+wiki_bar<- c(wiki1_bar, wiki2_bar, wiki3_bar, wiki4_bar, wiki5_bar)
+
+wiki_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(wiki_bar),length(wiki_bar), replace=T)
+  avg<- mean(wiki_bar[samp])
+  wiki_mean<- c(wiki_mean, avg)
+}
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(wiki_mean, adjust=2), col="red", lwd=3) 
+#abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+### Put both in the same plot
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance",xlim=c(0.67,0.75))
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+sum(wiki_mean>as.numeric(quantile(null_mean, 0.95)))/length(wiki_mean)
+
+```
+
+### bar length of the top 50 longest
+```{r}
+random1_bar_long<- sort(random1_bar, decreasing = T)
+random1_bar_long<- random1_bar_long[1:50]
+random2_bar_long<- sort(random2_bar, decreasing = T)
+random2_bar_long<- random2_bar_long[1:50]
+random3_bar_long<- sort(random3_bar, decreasing = T)
+random3_bar_long<- random3_bar_long[1:50]
+random4_bar_long<- sort(random4_bar, decreasing = T)
+random4_bar_long<- random4_bar_long[1:50]
+random5_bar_long<- sort(random5_bar, decreasing = T)
+random5_bar_long<- random5_bar_long[1:50]
+
+random_bar_long<- rbind(random1_bar_long, random2_bar_long, random3_bar_long, random4_bar_long, random5_bar_long)
+
+# null_mean<- matrix(0,nrow=1000,ncol=50)
+# for (i in 1:1000){
+#   samp<- sample(1:nrow(random_bar_long),nrow(random_bar_long), replace=T)
+#   avg<- apply(random_bar_long[samp,],2,mean)
+#   null_mean[i,]<- avg
+# }
+# 
+# null_mean<- apply(null_mean,2,mean)
+
+# null_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(random_bar_long),length(random_bar_long), replace=T)
+#   avg<- mean(random_bar_long[samp])
+#   null_mean<- c(null_mean, avg)
+# }
+
+# hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+# lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+# abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+wiki1_bar_long<- sort(wiki1_bar,decreasing = T)
+wiki1_bar_long<- wiki1_bar_long[1:50]
+wiki2_bar_long<- sort(wiki2_bar,decreasing = T)
+wiki2_bar_long<- wiki2_bar_long[1:50]
+wiki3_bar_long<- sort(wiki3_bar,decreasing = T)
+wiki3_bar_long<- wiki3_bar_long[1:50]
+wiki4_bar_long<- sort(wiki4_bar,decreasing = T)
+wiki4_bar_long<- wiki4_bar_long[1:50]
+wiki5_bar_long<- sort(wiki5_bar,decreasing = T)
+wiki5_bar_long<- wiki5_bar_long[1:50]
+
+wiki_bar_long<- rbind(wiki1_bar_long, wiki2_bar_long, wiki3_bar_long, wiki4_bar_long, wiki5_bar_long)
+
+# wiki_mean<- matrix(0,nrow=1000,ncol=50)
+# for (i in 1:1000){
+#   samp<- sample(1:nrow(wiki_bar_long),nrow(wiki_bar_long), replace=T)
+#   avg<- apply(wiki_bar_long[samp,],2,mean)
+#   wiki_mean[i,]<- avg
+# }
+# 
+# wiki_mean<- apply(wiki_mean,2,mean)
+
+# wiki_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(wiki_bar_long),length(wiki_bar_long), replace=T)
+#   avg<- mean(wiki_bar_long[samp])
+#   wiki_mean<- c(wiki_mean, avg)
+# }
+
+# hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+# lines(density(wiki_mean, adjust=2), col="darkgreen", lwd=3) 
+
+a<- wiki1_bar_long[1:50]
+b<- random1_bar_long[1:50]
+a
+b
+
+### only 21 bars in wiki1 are significantly longer than all the bars in random1
+```
+
+
+### large scale testing (null distribution)
+```{r}
+max2000_rank_dim <- read_csv("~/max2000_rank_dim.txt", col_names = FALSE)
+
+max2000_rank_dim$X1<- gsub("[^0-9]", "",max2000_rank_dim$X1)
+max2000_rank_dim$X3<- gsub("[^0-9]", "",max2000_rank_dim$X3)
+
+max2000_rank_dim<- matrix(as.numeric(max2000_rank_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(max2000_rank_dim,max2000_rank_dim,max2000_rank_dim,max2000_rank_dim), dim=c(20,20,4))
+
+allt<- array(0,dim=c(20,20,500))
+for (m in 1:500){
+
+group1<- sample(1:4,2)  
+all<- seq(1,4,1)
+group2<- all[is.na(pmatch(all,group1))]
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,group1])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,group2])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,group1[1]]-x1[1,j])^2,(large_scale[i,j,group1[2]]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,group2[1]]-x2[1,j])^2,(large_scale[i,j,group2[2]]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/2*1/4
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+allt[,,m] <- t
+print(m)
+}
+
+allt[is.na(allt)]<- 0
+cvt<- matrix(0,ncol=20,nrow=20)
+
+for (i in 1:20){
+  for (j in 1:20){
+    cvt[i,j]<- mean(allt[i,j,1:20])
+  }
+}
+
+#hist(allt)
+z<- qnorm(pt(cvt,13))
+z_null<- z
+z_null[is.na(z_null)] <- 0
+hist(z_null,30)
+
+qqnorm(z_null)
+qqline(z_null)
+```
+
+
+### large scale testing (4 samples)
+```{r}
+max2000_rank_rp1_dim<- read_csv("~/max2000_rank_rp1_H0_dim.txt", col_names = FALSE)
+max2000_rank_rp2_dim<- read_csv("~/max2000_rank_rp2_H0_dim.txt", col_names = FALSE)
+max2000_rank_rp3_dim<- read_csv("~/max2000_rank_rp3_H0_dim.txt", col_names = FALSE)
+max2000_rank_rp4_dim<- read_csv("~/max2000_rank_rp4_H0_dim.txt", col_names = FALSE)
+
+max2000_rank_rp1_dim$X1<- gsub("[^0-9]", "",max2000_rank_rp1_dim$X1)
+max2000_rank_rp1_dim$X3<- gsub("[^0-9]", "",max2000_rank_rp1_dim$X3)
+max2000_rank_rp2_dim$X1<- gsub("[^0-9]", "",max2000_rank_rp2_dim$X1)
+max2000_rank_rp2_dim$X3<- gsub("[^0-9]", "",max2000_rank_rp2_dim$X3)
+max2000_rank_rp3_dim$X1<- gsub("[^0-9]", "",max2000_rank_rp3_dim$X1)
+max2000_rank_rp3_dim$X3<- gsub("[^0-9]", "",max2000_rank_rp3_dim$X3)
+max2000_rank_rp4_dim$X1<- gsub("[^0-9]", "",max2000_rank_rp4_dim$X1)
+max2000_rank_rp4_dim$X3<- gsub("[^0-9]", "",max2000_rank_rp4_dim$X3)
+
+max2000_rank_rp1_dim<- matrix(as.numeric(max2000_rank_rp1_dim$X3), ncol=20, byrow=F)
+max2000_rank_rp2_dim<- matrix(as.numeric(max2000_rank_rp2_dim$X3), ncol=20, byrow=F)
+max2000_rank_rp3_dim<- matrix(as.numeric(max2000_rank_rp3_dim$X3), ncol=20, byrow=F)
+max2000_rank_rp4_dim<- matrix(as.numeric(max2000_rank_rp4_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(max2000_rank_rp1_dim,max2000_rank_rp2_dim,max2000_rank_rp3_dim,max2000_rank_rp4_dim, max2000_rank_dim,max2000_rank_dim,max2000_rank_dim,max2000_rank_dim), dim=c(20,20,8))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:4])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,5:8])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,5]-x2[1,j])^2,(large_scale[i,j,6]-x2[1,j])^2,(large_scale[i,j,7]-x2[1,j])^2,(large_scale[i,j,8]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/6*1/8
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,6))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=10) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.05/400),na.rm = T)
+table<- z
+hist(z)
+ifelse(z>quantile(z_null,1-0.05/400),1,0)
+
+```
+
+### large scale testing with replacement data sets (null as random_from_wiki)
+```{r}
+wiki_sample1_dim<- read_csv("~/wiki_sample1_dim.txt", col_names = FALSE)
+wiki_sample2_dim<- read_csv("~/wiki_sample2_dim.txt", col_names = FALSE)
+wiki_sample3_dim<- read_csv("~/wiki_sample3_dim.txt", col_names = FALSE)
+wiki_sample4_dim<- read_csv("~/wiki_sample4_dim.txt", col_names = FALSE)
+wiki_sample5_dim<- read_csv("~/wiki_sample5_dim.txt", col_names = FALSE)
+wiki_sample6_dim<- read_csv("~/wiki_sample6_dim.txt", col_names = FALSE)
+wiki_sample7_dim<- read_csv("~/wiki_sample7_dim.txt", col_names = FALSE)
+wiki_sample8_dim<- read_csv("~/wiki_sample8_dim.txt", col_names = FALSE)
+wiki_sample9_dim<- read_csv("~/wiki_sample9_dim.txt", col_names = FALSE)
+wiki_sample10_dim<- read_csv("~/wiki_sample10_dim.txt", col_names = FALSE)
+wiki_sample11_dim<- read_csv("~/wiki_sample11_dim.txt", col_names = FALSE)
+wiki_sample12_dim<- read_csv("~/wiki_sample12_dim.txt", col_names = FALSE)
+wiki_sample13_dim<- read_csv("~/wiki_sample13_dim.txt", col_names = FALSE)
+wiki_sample14_dim<- read_csv("~/wiki_sample14_dim.txt", col_names = FALSE)
+wiki_sample15_dim<- read_csv("~/wiki_sample15_dim.txt", col_names = FALSE)
+
+wiki_sample1_dim$X1<- gsub("[^0-9]", "",wiki_sample1_dim$X1)
+wiki_sample1_dim$X3<- gsub("[^0-9]", "",wiki_sample1_dim$X3)
+wiki_sample2_dim$X1<- gsub("[^0-9]", "",wiki_sample2_dim$X1)
+wiki_sample2_dim$X3<- gsub("[^0-9]", "",wiki_sample2_dim$X3)
+wiki_sample3_dim$X1<- gsub("[^0-9]", "",wiki_sample3_dim$X1)
+wiki_sample3_dim$X3<- gsub("[^0-9]", "",wiki_sample3_dim$X3)
+wiki_sample4_dim$X1<- gsub("[^0-9]", "",wiki_sample4_dim$X1)
+wiki_sample4_dim$X3<- gsub("[^0-9]", "",wiki_sample4_dim$X3)
+wiki_sample5_dim$X1<- gsub("[^0-9]", "",wiki_sample5_dim$X1)
+wiki_sample5_dim$X3<- gsub("[^0-9]", "",wiki_sample5_dim$X3)
+wiki_sample6_dim$X1<- gsub("[^0-9]", "",wiki_sample6_dim$X1)
+wiki_sample6_dim$X3<- gsub("[^0-9]", "",wiki_sample6_dim$X3)
+wiki_sample7_dim$X1<- gsub("[^0-9]", "",wiki_sample7_dim$X1)
+wiki_sample7_dim$X3<- gsub("[^0-9]", "",wiki_sample7_dim$X3)
+wiki_sample8_dim$X1<- gsub("[^0-9]", "",wiki_sample8_dim$X1)
+wiki_sample8_dim$X3<- gsub("[^0-9]", "",wiki_sample8_dim$X3)
+wiki_sample9_dim$X1<- gsub("[^0-9]", "",wiki_sample9_dim$X1)
+wiki_sample9_dim$X3<- gsub("[^0-9]", "",wiki_sample9_dim$X3)
+wiki_sample10_dim$X1<- gsub("[^0-9]", "",wiki_sample10_dim$X1)
+wiki_sample10_dim$X3<- gsub("[^0-9]", "",wiki_sample10_dim$X3)
+wiki_sample11_dim$X1<- gsub("[^0-9]", "",wiki_sample11_dim$X1)
+wiki_sample11_dim$X3<- gsub("[^0-9]", "",wiki_sample11_dim$X3)
+wiki_sample12_dim$X1<- gsub("[^0-9]", "",wiki_sample12_dim$X1)
+wiki_sample12_dim$X3<- gsub("[^0-9]", "",wiki_sample12_dim$X3)
+wiki_sample13_dim$X1<- gsub("[^0-9]", "",wiki_sample13_dim$X1)
+wiki_sample13_dim$X3<- gsub("[^0-9]", "",wiki_sample13_dim$X3)
+wiki_sample14_dim$X1<- gsub("[^0-9]", "",wiki_sample14_dim$X1)
+wiki_sample14_dim$X3<- gsub("[^0-9]", "",wiki_sample14_dim$X3)
+wiki_sample15_dim$X1<- gsub("[^0-9]", "",wiki_sample15_dim$X1)
+wiki_sample15_dim$X3<- gsub("[^0-9]", "",wiki_sample15_dim$X3)
+
+wiki_sample1_dim<- matrix(as.numeric(wiki_sample1_dim$X3), ncol=20, byrow=F)
+wiki_sample2_dim<- matrix(as.numeric(wiki_sample2_dim$X3), ncol=20, byrow=F)
+wiki_sample3_dim<- matrix(as.numeric(wiki_sample3_dim$X3), ncol=20, byrow=F)
+wiki_sample4_dim<- matrix(as.numeric(wiki_sample4_dim$X3), ncol=20, byrow=F)
+wiki_sample5_dim<- matrix(as.numeric(wiki_sample5_dim$X3), ncol=20, byrow=F)
+wiki_sample6_dim<- matrix(as.numeric(wiki_sample6_dim$X3), ncol=20, byrow=F)
+wiki_sample7_dim<- matrix(as.numeric(wiki_sample7_dim$X3), ncol=20, byrow=F)
+wiki_sample8_dim<- matrix(as.numeric(wiki_sample8_dim$X3), ncol=20, byrow=F)
+wiki_sample9_dim<- matrix(as.numeric(wiki_sample9_dim$X3), ncol=20, byrow=F)
+wiki_sample10_dim<- matrix(as.numeric(wiki_sample10_dim$X3), ncol=20, byrow=F)
+wiki_sample11_dim<- matrix(as.numeric(wiki_sample11_dim$X3), ncol=20, byrow=F)
+wiki_sample12_dim<- matrix(as.numeric(wiki_sample12_dim$X3), ncol=20, byrow=F)
+wiki_sample13_dim<- matrix(as.numeric(wiki_sample13_dim$X3), ncol=20, byrow=F)
+wiki_sample14_dim<- matrix(as.numeric(wiki_sample14_dim$X3), ncol=20, byrow=F)
+wiki_sample15_dim<- matrix(as.numeric(wiki_sample15_dim$X3), ncol=20, byrow=F)
+
+
+large_scale<- array(c(wiki_sample1_dim, wiki_sample2_dim, wiki_sample3_dim, wiki_sample4_dim, wiki_sample5_dim, wiki_sample6_dim, wiki_sample7_dim, wiki_sample8_dim, wiki_sample9_dim, wiki_sample10_dim, wiki_sample11_dim, wiki_sample12_dim, wiki_sample13_dim, wiki_sample14_dim, wiki_sample15_dim), dim=c(20,20,15))
+
+
+allt<- array(0,dim=c(20,20,500))
+for (m in 1:500){
+
+group1<- sample(1:15,7)  
+all<- seq(1,15,1)
+group2<- all[is.na(pmatch(all,group1))]
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,group1])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,group2])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,group1[1]]-x1[1,j])^2,(large_scale[i,j,group1[2]]-x1[1,j])^2,(large_scale[i,j,group1[3]]-x1[1,j])^2,(large_scale[i,j,group1[4]]-x1[1,j])^2,(large_scale[i,j,group1[5]]-x1[1,j])^2,(large_scale[i,j,group1[6]]-x1[1,j])^2,(large_scale[i,j,group1[7]]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,group2[1]]-x2[1,j])^2,(large_scale[i,j,group2[2]]-x2[1,j])^2,(large_scale[i,j,group2[3]]-x2[1,j])^2,
+                 (large_scale[i,j,group2[4]]-x2[1,j])^2,(large_scale[i,j,group2[5]]-x2[1,j])^2,(large_scale[i,j,group2[6]]-x2[1,j])^2,(large_scale[i,j,group2[7]]-x2[1,j])^2,(large_scale[i,j,group2[8]]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/13*1/15
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+allt[,,m] <- t
+print(m)
+}
+
+allt[is.na(allt)]<- 0
+cvt<- matrix(0,ncol=20,nrow=20)
+
+for (i in 1:20){
+  for (j in 1:20){
+    cvt[i,j]<- mean(allt[i,j,1:20])
+  }
+}
+
+#hist(allt)
+z<- qnorm(pt(cvt,13))
+z_null<- z
+z_null[is.na(z_null)] <- 0
+hist(z_null,30)
+
+qqnorm(z_null)
+qqline(z_null)
+
+```
+
+### replacement datasets for random_from_wiki
+```{r}
+options(scipen=999)
+random_from_wiki_2000 <- read_delim("~/random_from_wiki_2000.txt"," ", escape_double = FALSE, trim_ws = TRUE)
+random1_2000 <- read_delim("~/random1_2000.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+random_from_wiki_2000<- random_from_wiki_2000[4:2003,]
+random1_2000<- random1_2000[4:2003,]
+random_from_wiki_2000<- matrix(as.numeric(unlist(random_from_wiki_2000)),nrow=2000)
+random1_2000<- matrix(as.numeric(unlist(random1_2000)),nrow=2000)
+
+### rp 2
+rp<- sample(1:2000,2)
+random_from_wiki_2000_rp2<- random_from_wiki_2000
+random_from_wiki_2000_rp2[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 4
+rp<- sample(1:2000,4)
+random_from_wiki_2000_rp4<- random_from_wiki_2000
+random_from_wiki_2000_rp4[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 6
+rp<- sample(1:2000,6)
+random_from_wiki_2000_rp6<- random_from_wiki_2000
+random_from_wiki_2000_rp6[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 8
+rp<- sample(1:2000,8)
+random_from_wiki_2000_rp8<- random_from_wiki_2000
+random_from_wiki_2000_rp8[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 10
+rp<- sample(1:2000,10)
+random_from_wiki_2000_rp10<- random_from_wiki_2000
+random_from_wiki_2000_rp10[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 12
+rp<- sample(1:2000,12)
+random_from_wiki_2000_rp12<- random_from_wiki_2000
+random_from_wiki_2000_rp12[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 14
+rp<- sample(1:2000,14)
+random_from_wiki_2000_rp14<- random_from_wiki_2000
+random_from_wiki_2000_rp14[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 16
+rp<- sample(1:2000,16)
+random_from_wiki_2000_rp16<- random_from_wiki_2000
+random_from_wiki_2000_rp16[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 18
+rp<- sample(1:2000,18)
+random_from_wiki_2000_rp18<- random_from_wiki_2000
+random_from_wiki_2000_rp18[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 20
+rp<- sample(1:2000,20)
+random_from_wiki_2000_rp20<- random_from_wiki_2000
+random_from_wiki_2000_rp20[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 22
+rp<- sample(1:2000,22)
+random_from_wiki_2000_rp22<- random_from_wiki_2000
+random_from_wiki_2000_rp22[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 24
+rp<- sample(1:2000,24)
+random_from_wiki_2000_rp24<- random_from_wiki_2000
+random_from_wiki_2000_rp24[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 26
+rp<- sample(1:2000,26)
+random_from_wiki_2000_rp26<- random_from_wiki_2000
+random_from_wiki_2000_rp26[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 28
+rp<- sample(1:2000,28)
+random_from_wiki_2000_rp28<- random_from_wiki_2000
+random_from_wiki_2000_rp28[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 30
+rp<- sample(1:2000,30)
+random_from_wiki_2000_rp30<- random_from_wiki_2000
+random_from_wiki_2000_rp30[rp,1:200]<- random1_2000[rp,1:200]
+
+# write.table(random_from_wiki_2000_rp2, "random_from_wiki_2000_rp2.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp4, "random_from_wiki_2000_rp4.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp6, "random_from_wiki_2000_rp6.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp8, "random_from_wiki_2000_rp8.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp10, "random_from_wiki_2000_rp10.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp12, "random_from_wiki_2000_rp12.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp14, "random_from_wiki_2000_rp14.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp16, "random_from_wiki_2000_rp16.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp18, "random_from_wiki_2000_rp18.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp20, "random_from_wiki_2000_rp20.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp22, "random_from_wiki_2000_rp22.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp24, "random_from_wiki_2000_rp24.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp26, "random_from_wiki_2000_rp26.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp28, "random_from_wiki_2000_rp28.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp30, "random_from_wiki_2000_rp30.txt",row.names=FALSE, na="", col.names = FALSE)
+```
+
+### large scale testing on replacement datasets (random_from_wiki)
+```{r}
+random_from_wiki_2000_rp2_dim<- read_csv("~/random_from_wiki_2000_rp2_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp4_dim<- read_csv("~/random_from_wiki_2000_rp4_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp6_dim<- read_csv("~/random_from_wiki_2000_rp6_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp8_dim<- read_csv("~/random_from_wiki_2000_rp8_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp10_dim<- read_csv("~/random_from_wiki_2000_rp10_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp12_dim<- read_csv("~/random_from_wiki_2000_rp12_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp14_dim<- read_csv("~/random_from_wiki_2000_rp14_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp16_dim<- read_csv("~/random_from_wiki_2000_rp16_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp18_dim<- read_csv("~/random_from_wiki_2000_rp18_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp20_dim<- read_csv("~/random_from_wiki_2000_rp20_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp22_dim<- read_csv("~/random_from_wiki_2000_rp22_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp24_dim<- read_csv("~/random_from_wiki_2000_rp24_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp26_dim<- read_csv("~/random_from_wiki_2000_rp26_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp28_dim<- read_csv("~/random_from_wiki_2000_rp28_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp30_dim<- read_csv("~/random_from_wiki_2000_rp30_H0_dim.txt", col_names = FALSE)
+
+random_from_wiki_2000_rp2_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp2_dim$X1)
+random_from_wiki_2000_rp2_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp2_dim$X3)
+random_from_wiki_2000_rp4_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp4_dim$X1)
+random_from_wiki_2000_rp4_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp4_dim$X3)
+random_from_wiki_2000_rp6_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp6_dim$X1)
+random_from_wiki_2000_rp6_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp6_dim$X3)
+random_from_wiki_2000_rp8_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp8_dim$X1)
+random_from_wiki_2000_rp8_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp8_dim$X3)
+random_from_wiki_2000_rp10_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp10_dim$X1)
+random_from_wiki_2000_rp10_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp10_dim$X3)
+random_from_wiki_2000_rp12_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp12_dim$X1)
+random_from_wiki_2000_rp12_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp12_dim$X3)
+random_from_wiki_2000_rp14_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp14_dim$X1)
+random_from_wiki_2000_rp14_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp14_dim$X3)
+random_from_wiki_2000_rp16_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp16_dim$X1)
+random_from_wiki_2000_rp16_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp16_dim$X3)
+random_from_wiki_2000_rp18_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp18_dim$X1)
+random_from_wiki_2000_rp18_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp18_dim$X3)
+random_from_wiki_2000_rp20_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp20_dim$X1)
+random_from_wiki_2000_rp20_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp20_dim$X3)
+random_from_wiki_2000_rp22_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp22_dim$X1)
+random_from_wiki_2000_rp22_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp22_dim$X3)
+random_from_wiki_2000_rp24_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp24_dim$X1)
+random_from_wiki_2000_rp24_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp24_dim$X3)
+random_from_wiki_2000_rp26_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp26_dim$X1)
+random_from_wiki_2000_rp26_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp26_dim$X3)
+random_from_wiki_2000_rp28_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp28_dim$X1)
+random_from_wiki_2000_rp28_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp28_dim$X3)
+random_from_wiki_2000_rp30_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp30_dim$X1)
+random_from_wiki_2000_rp30_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp30_dim$X3)
+
+random_from_wiki_2000_rp2_dim<- matrix(as.numeric(random_from_wiki_2000_rp2_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp4_dim<- matrix(as.numeric(random_from_wiki_2000_rp4_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp6_dim<- matrix(as.numeric(random_from_wiki_2000_rp6_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp8_dim<- matrix(as.numeric(random_from_wiki_2000_rp8_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp10_dim<- matrix(as.numeric(random_from_wiki_2000_rp10_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp12_dim<- matrix(as.numeric(random_from_wiki_2000_rp12_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp14_dim<- matrix(as.numeric(random_from_wiki_2000_rp14_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp16_dim<- matrix(as.numeric(random_from_wiki_2000_rp16_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp18_dim<- matrix(as.numeric(random_from_wiki_2000_rp18_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp20_dim<- matrix(as.numeric(random_from_wiki_2000_rp20_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp22_dim<- matrix(as.numeric(random_from_wiki_2000_rp22_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp24_dim<- matrix(as.numeric(random_from_wiki_2000_rp24_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp26_dim<- matrix(as.numeric(random_from_wiki_2000_rp26_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp28_dim<- matrix(as.numeric(random_from_wiki_2000_rp28_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp30_dim<- matrix(as.numeric(random_from_wiki_2000_rp30_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(random_from_wiki_2000_rp2_dim, random_from_wiki_2000_rp4_dim, random_from_wiki_2000_rp6_dim, random_from_wiki_2000_rp8_dim, random_from_wiki_2000_rp10_dim, random_from_wiki_2000_rp12_dim, random_from_wiki_2000_rp14_dim, random_from_wiki_2000_rp16_dim, random_from_wiki_2000_rp18_dim, random_from_wiki_2000_rp20_dim, random_from_wiki_2000_rp22_dim, random_from_wiki_2000_rp24_dim, random_from_wiki_2000_rp26_dim, random_from_wiki_2000_rp28_dim, random_from_wiki_2000_rp30_dim, wiki_sample1_dim, wiki_sample2_dim, wiki_sample3_dim, wiki_sample4_dim, wiki_sample5_dim, wiki_sample6_dim, wiki_sample7_dim, wiki_sample8_dim, wiki_sample9_dim, wiki_sample10_dim, wiki_sample11_dim, wiki_sample12_dim, wiki_sample13_dim, wiki_sample14_dim, wiki_sample15_dim), dim=c(20,20,30))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:15])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,16:30])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2,(large_scale[i,j,5]-x1[1,j])^2,(large_scale[i,j,6]-x1[1,j])^2,(large_scale[i,j,7]-x1[1,j])^2,(large_scale[i,j,8]-x1[1,j])^2,(large_scale[i,j,9]-x1[1,j])^2,(large_scale[i,j,10]-x1[1,j])^2,(large_scale[i,j,11]-x1[1,j])^2,(large_scale[i,j,12]-x1[1,j])^2,(large_scale[i,j,13]-x1[1,j])^2,(large_scale[i,j,14]-x1[1,j])^2, (large_scale[i,j,15]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,16]-x2[1,j])^2,(large_scale[i,j,17]-x2[1,j])^2,(large_scale[i,j,18]-x2[1,j])^2,
+                 (large_scale[i,j,19]-x2[1,j])^2,(large_scale[i,j,20]-x2[1,j])^2,(large_scale[i,j,21]-x2[1,j])^2,(large_scale[i,j,22]-x2[1,j])^2,(large_scale[i,j,23]-x2[1,j])^2,(large_scale[i,j,24]-x2[1,j])^2,(large_scale[i,j,25]-x2[1,j])^2,(large_scale[i,j,26]-x2[1,j])^2,(large_scale[i,j,27]-x2[1,j])^2,(large_scale[i,j,28]-x2[1,j])^2,(large_scale[i,j,29]-x2[1,j])^2,(large_scale[i,j,30]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/28*1/30
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,28))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=5) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.025/400),na.rm = T)+sum(z<quantile(z_null,0.025/400),na.rm = T)
+table<- z
+table_01<- ifelse((z>quantile(z_null,1-0.025/400)|z<quantile(z_null,0.025/400)),1,0)
+
+### at most, we have 30 random vectors, maybe that is not a small change, need to do smaller changes
+```
+ 
+### replace just 2 and 30, and compare
+
+### replacement datasets for random_from_wiki (smaller changes)
+```{r}
+options(scipen=999)
+random_from_wiki_2000 <- read_delim("~/random_from_wiki_2000.txt"," ", escape_double = FALSE, trim_ws = TRUE)
+random1_2000 <- read_delim("~/random1_2000.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+random_from_wiki_2000<- random_from_wiki_2000[4:2003,]
+random1_2000<- random1_2000[4:2003,]
+random_from_wiki_2000<- matrix(as.numeric(unlist(random_from_wiki_2000)),nrow=2000)
+random1_2000<- matrix(as.numeric(unlist(random1_2000)),nrow=2000)
+
+### rp 1
+rp<- sample(1:2000,1)
+random_from_wiki_2000_rp1<- random_from_wiki_2000
+random_from_wiki_2000_rp1[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 3
+rp<- sample(1:2000,3)
+random_from_wiki_2000_rp3<- random_from_wiki_2000
+random_from_wiki_2000_rp3[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 5
+rp<- sample(1:2000,5)
+random_from_wiki_2000_rp5<- random_from_wiki_2000
+random_from_wiki_2000_rp5[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 7
+rp<- sample(1:2000,7)
+random_from_wiki_2000_rp7<- random_from_wiki_2000
+random_from_wiki_2000_rp7[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 9
+rp<- sample(1:2000,9)
+random_from_wiki_2000_rp9<- random_from_wiki_2000
+random_from_wiki_2000_rp9[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 11
+rp<- sample(1:2000,11)
+random_from_wiki_2000_rp11<- random_from_wiki_2000
+random_from_wiki_2000_rp11[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 13
+rp<- sample(1:2000,13)
+random_from_wiki_2000_rp13<- random_from_wiki_2000
+random_from_wiki_2000_rp13[rp,1:200]<- random1_2000[rp,1:200]
+
+
+### rp 15
+rp<- sample(1:2000,15)
+random_from_wiki_2000_rp15<- random_from_wiki_2000
+random_from_wiki_2000_rp15[rp,1:200]<- random1_2000[rp,1:200]
+
+# write.table(random_from_wiki_2000_rp1, "random_from_wiki_2000_rp1.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp3, "random_from_wiki_2000_rp3.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp5, "random_from_wiki_2000_rp5.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp7, "random_from_wiki_2000_rp7.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp9, "random_from_wiki_2000_rp9.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp11, "random_from_wiki_2000_rp11.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp13, "random_from_wiki_2000_rp13.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_from_wiki_2000_rp15, "random_from_wiki_2000_rp15.txt",row.names=FALSE, na="", col.names = FALSE)
+
+```
+
+### large scale testing on replacement datasets (random_from_wiki)
+```{r}
+random_from_wiki_2000_rp1_dim<- read_csv("~/random_from_wiki_2000_rp1_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp2_dim<- read_csv("~/random_from_wiki_2000_rp2_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp3_dim<- read_csv("~/random_from_wiki_2000_rp3_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp4_dim<- read_csv("~/random_from_wiki_2000_rp4_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp5_dim<- read_csv("~/random_from_wiki_2000_rp5_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp6_dim<- read_csv("~/random_from_wiki_2000_rp6_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp7_dim<- read_csv("~/random_from_wiki_2000_rp7_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp8_dim<- read_csv("~/random_from_wiki_2000_rp8_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp9_dim<- read_csv("~/random_from_wiki_2000_rp9_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp10_dim<- read_csv("~/random_from_wiki_2000_rp10_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp11_dim<- read_csv("~/random_from_wiki_2000_rp11_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp12_dim<- read_csv("~/random_from_wiki_2000_rp12_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp13_dim<- read_csv("~/random_from_wiki_2000_rp13_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp14_dim<- read_csv("~/random_from_wiki_2000_rp14_H0_dim.txt", col_names = FALSE)
+random_from_wiki_2000_rp15_dim<- read_csv("~/random_from_wiki_2000_rp15_H0_dim.txt", col_names = FALSE)
+
+random_from_wiki_2000_rp1_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp1_dim$X1)
+random_from_wiki_2000_rp1_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp1_dim$X3)
+random_from_wiki_2000_rp2_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp2_dim$X1)
+random_from_wiki_2000_rp2_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp2_dim$X3)
+random_from_wiki_2000_rp3_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp3_dim$X1)
+random_from_wiki_2000_rp3_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp3_dim$X3)
+random_from_wiki_2000_rp4_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp4_dim$X1)
+random_from_wiki_2000_rp4_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp4_dim$X3)
+random_from_wiki_2000_rp5_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp5_dim$X1)
+random_from_wiki_2000_rp5_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp5_dim$X3)
+random_from_wiki_2000_rp6_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp6_dim$X1)
+random_from_wiki_2000_rp6_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp6_dim$X3)
+random_from_wiki_2000_rp7_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp7_dim$X1)
+random_from_wiki_2000_rp7_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp7_dim$X3)
+random_from_wiki_2000_rp8_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp8_dim$X1)
+random_from_wiki_2000_rp8_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp8_dim$X3)
+random_from_wiki_2000_rp9_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp9_dim$X1)
+random_from_wiki_2000_rp9_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp9_dim$X3)
+random_from_wiki_2000_rp10_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp10_dim$X1)
+random_from_wiki_2000_rp10_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp10_dim$X3)
+random_from_wiki_2000_rp11_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp11_dim$X1)
+random_from_wiki_2000_rp11_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp11_dim$X3)
+random_from_wiki_2000_rp12_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp12_dim$X1)
+random_from_wiki_2000_rp12_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp12_dim$X3)
+random_from_wiki_2000_rp13_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp13_dim$X1)
+random_from_wiki_2000_rp13_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp13_dim$X3)
+random_from_wiki_2000_rp14_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp14_dim$X1)
+random_from_wiki_2000_rp14_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp14_dim$X3)
+random_from_wiki_2000_rp15_dim$X1<- gsub("[^0-9]", "",random_from_wiki_2000_rp15_dim$X1)
+random_from_wiki_2000_rp15_dim$X3<- gsub("[^0-9]", "",random_from_wiki_2000_rp15_dim$X3)
+
+random_from_wiki_2000_rp1_dim<- matrix(as.numeric(random_from_wiki_2000_rp1_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp2_dim<- matrix(as.numeric(random_from_wiki_2000_rp2_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp3_dim<- matrix(as.numeric(random_from_wiki_2000_rp3_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp4_dim<- matrix(as.numeric(random_from_wiki_2000_rp4_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp5_dim<- matrix(as.numeric(random_from_wiki_2000_rp5_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp6_dim<- matrix(as.numeric(random_from_wiki_2000_rp6_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp7_dim<- matrix(as.numeric(random_from_wiki_2000_rp7_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp8_dim<- matrix(as.numeric(random_from_wiki_2000_rp8_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp9_dim<- matrix(as.numeric(random_from_wiki_2000_rp9_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp10_dim<- matrix(as.numeric(random_from_wiki_2000_rp10_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp11_dim<- matrix(as.numeric(random_from_wiki_2000_rp11_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp12_dim<- matrix(as.numeric(random_from_wiki_2000_rp12_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp13_dim<- matrix(as.numeric(random_from_wiki_2000_rp13_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp14_dim<- matrix(as.numeric(random_from_wiki_2000_rp14_dim$X3), ncol=20, byrow=F)
+random_from_wiki_2000_rp15_dim<- matrix(as.numeric(random_from_wiki_2000_rp15_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(random_from_wiki_2000_rp1_dim, random_from_wiki_2000_rp2_dim, random_from_wiki_2000_rp3_dim, random_from_wiki_2000_rp4_dim, random_from_wiki_2000_rp5_dim, random_from_wiki_2000_rp6_dim, random_from_wiki_2000_rp7_dim, random_from_wiki_2000_rp8_dim, random_from_wiki_2000_rp9_dim, random_from_wiki_2000_rp10_dim, random_from_wiki_2000_rp11_dim, random_from_wiki_2000_rp12_dim, random_from_wiki_2000_rp13_dim, random_from_wiki_2000_rp14_dim, random_from_wiki_2000_rp15_dim, wiki_sample1_dim, wiki_sample2_dim, wiki_sample3_dim, wiki_sample4_dim, wiki_sample5_dim, wiki_sample6_dim, wiki_sample7_dim, wiki_sample8_dim, wiki_sample9_dim, wiki_sample10_dim, wiki_sample11_dim, wiki_sample12_dim, wiki_sample13_dim, wiki_sample14_dim, wiki_sample15_dim), dim=c(20,20,30))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:15])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,16:30])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2,(large_scale[i,j,5]-x1[1,j])^2,(large_scale[i,j,6]-x1[1,j])^2,(large_scale[i,j,7]-x1[1,j])^2,(large_scale[i,j,8]-x1[1,j])^2,(large_scale[i,j,9]-x1[1,j])^2,(large_scale[i,j,10]-x1[1,j])^2,(large_scale[i,j,11]-x1[1,j])^2,(large_scale[i,j,12]-x1[1,j])^2,(large_scale[i,j,13]-x1[1,j])^2,(large_scale[i,j,14]-x1[1,j])^2, (large_scale[i,j,15]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,16]-x2[1,j])^2,(large_scale[i,j,17]-x2[1,j])^2,(large_scale[i,j,18]-x2[1,j])^2,
+                 (large_scale[i,j,19]-x2[1,j])^2,(large_scale[i,j,20]-x2[1,j])^2,(large_scale[i,j,21]-x2[1,j])^2,(large_scale[i,j,22]-x2[1,j])^2,(large_scale[i,j,23]-x2[1,j])^2,(large_scale[i,j,24]-x2[1,j])^2,(large_scale[i,j,25]-x2[1,j])^2,(large_scale[i,j,26]-x2[1,j])^2,(large_scale[i,j,27]-x2[1,j])^2,(large_scale[i,j,28]-x2[1,j])^2,(large_scale[i,j,29]-x2[1,j])^2,(large_scale[i,j,30]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/28*1/30
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,28))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=5) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.025/400),na.rm = T)+sum(z<quantile(z_null,0.025/400),na.rm = T)
+table<- z
+table_01_random_from_wiki<- ifelse((z>quantile(z_null,1-0.025/400)|z<quantile(z_null,0.025/400)),1,0)
+
+```
+
+
+### large scale testing on rp (random data, and introduce wiki vectors)
+### null distribution
+
+```{r}
+random1_dim<- read_csv("~/random1_dim.txt", col_names = FALSE)
+random2_dim<- read_csv("~/random2_dim.txt", col_names = FALSE)
+random3_dim<- read_csv("~/random3_dim.txt", col_names = FALSE)
+random4_dim<- read_csv("~/random4_dim.txt", col_names = FALSE)
+random5_dim<- read_csv("~/random5_dim.txt", col_names = FALSE)
+random6_dim<- read_csv("~/random6_dim.txt", col_names = FALSE)
+random7_dim<- read_csv("~/random7_dim.txt", col_names = FALSE)
+random8_dim<- read_csv("~/random8_dim.txt", col_names = FALSE)
+random9_dim<- read_csv("~/random9_dim.txt", col_names = FALSE)
+random10_dim<- read_csv("~/random10_dim.txt", col_names = FALSE)
+random11_dim<- read_csv("~/random11_dim.txt", col_names = FALSE)
+random12_dim<- read_csv("~/random12_dim.txt", col_names = FALSE)
+random13_dim<- read_csv("~/random13_dim.txt", col_names = FALSE)
+random14_dim<- read_csv("~/random14_dim.txt", col_names = FALSE)
+random15_dim<- read_csv("~/random15_dim.txt", col_names = FALSE)
+
+random1_dim$X1<- gsub("[^0-9]", "",random1_dim$X1)
+random1_dim$X3<- gsub("[^0-9]", "",random1_dim$X3)
+random2_dim$X1<- gsub("[^0-9]", "",random2_dim$X1)
+random2_dim$X3<- gsub("[^0-9]", "",random2_dim$X3)
+random3_dim$X1<- gsub("[^0-9]", "",random3_dim$X1)
+random3_dim$X3<- gsub("[^0-9]", "",random3_dim$X3)
+random4_dim$X1<- gsub("[^0-9]", "",random4_dim$X1)
+random4_dim$X3<- gsub("[^0-9]", "",random4_dim$X3)
+random5_dim$X1<- gsub("[^0-9]", "",random5_dim$X1)
+random5_dim$X3<- gsub("[^0-9]", "",random5_dim$X3)
+random6_dim$X1<- gsub("[^0-9]", "",random6_dim$X1)
+random6_dim$X3<- gsub("[^0-9]", "",random6_dim$X3)
+random7_dim$X1<- gsub("[^0-9]", "",random7_dim$X1)
+random7_dim$X3<- gsub("[^0-9]", "",random7_dim$X3)
+random8_dim$X1<- gsub("[^0-9]", "",random8_dim$X1)
+random8_dim$X3<- gsub("[^0-9]", "",random8_dim$X3)
+random9_dim$X1<- gsub("[^0-9]", "",random9_dim$X1)
+random9_dim$X3<- gsub("[^0-9]", "",random9_dim$X3)
+random10_dim$X1<- gsub("[^0-9]", "",random10_dim$X1)
+random10_dim$X3<- gsub("[^0-9]", "",random10_dim$X3)
+random11_dim$X1<- gsub("[^0-9]", "",random11_dim$X1)
+random11_dim$X3<- gsub("[^0-9]", "",random11_dim$X3)
+random12_dim$X1<- gsub("[^0-9]", "",random12_dim$X1)
+random12_dim$X3<- gsub("[^0-9]", "",random12_dim$X3)
+random13_dim$X1<- gsub("[^0-9]", "",random13_dim$X1)
+random13_dim$X3<- gsub("[^0-9]", "",random13_dim$X3)
+random14_dim$X1<- gsub("[^0-9]", "",random14_dim$X1)
+random14_dim$X3<- gsub("[^0-9]", "",random14_dim$X3)
+random15_dim$X1<- gsub("[^0-9]", "",random15_dim$X1)
+random15_dim$X3<- gsub("[^0-9]", "",random15_dim$X3)
+
+random1_dim<- matrix(as.numeric(random1_dim$X3), ncol=20, byrow=F)
+random2_dim<- matrix(as.numeric(random2_dim$X3), ncol=20, byrow=F)
+random3_dim<- matrix(as.numeric(random3_dim$X3), ncol=20, byrow=F)
+random4_dim<- matrix(as.numeric(random4_dim$X3), ncol=20, byrow=F)
+random5_dim<- matrix(as.numeric(random5_dim$X3), ncol=20, byrow=F)
+random6_dim<- matrix(as.numeric(random6_dim$X3), ncol=20, byrow=F)
+random7_dim<- matrix(as.numeric(random7_dim$X3), ncol=20, byrow=F)
+random8_dim<- matrix(as.numeric(random8_dim$X3), ncol=20, byrow=F)
+random9_dim<- matrix(as.numeric(random9_dim$X3), ncol=20, byrow=F)
+random10_dim<- matrix(as.numeric(random10_dim$X3), ncol=20, byrow=F)
+random11_dim<- matrix(as.numeric(random11_dim$X3), ncol=20, byrow=F)
+random12_dim<- matrix(as.numeric(random12_dim$X3), ncol=20, byrow=F)
+random13_dim<- matrix(as.numeric(random13_dim$X3), ncol=20, byrow=F)
+random14_dim<- matrix(as.numeric(random14_dim$X3), ncol=20, byrow=F)
+random15_dim<- matrix(as.numeric(random15_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(random1_dim, random2_dim, random3_dim, random4_dim, random5_dim, random6_dim, random7_dim, random8_dim, random9_dim, random10_dim, random11_dim, random12_dim, random13_dim, random14_dim, random15_dim), dim=c(20,20,15))
+
+
+allt<- array(0,dim=c(20,20,500))
+for (m in 1:500){
+
+group1<- sample(1:15,7)  
+all<- seq(1,15,1)
+group2<- all[is.na(pmatch(all,group1))]
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,group1])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,group2])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,group1[1]]-x1[1,j])^2,(large_scale[i,j,group1[2]]-x1[1,j])^2,(large_scale[i,j,group1[3]]-x1[1,j])^2,(large_scale[i,j,group1[4]]-x1[1,j])^2,(large_scale[i,j,group1[5]]-x1[1,j])^2,(large_scale[i,j,group1[6]]-x1[1,j])^2,(large_scale[i,j,group1[7]]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,group2[1]]-x2[1,j])^2,(large_scale[i,j,group2[2]]-x2[1,j])^2,(large_scale[i,j,group2[3]]-x2[1,j])^2,
+                 (large_scale[i,j,group2[4]]-x2[1,j])^2,(large_scale[i,j,group2[5]]-x2[1,j])^2,(large_scale[i,j,group2[6]]-x2[1,j])^2,(large_scale[i,j,group2[7]]-x2[1,j])^2,(large_scale[i,j,group2[8]]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/13*1/15
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+allt[,,m] <- t
+print(m)
+}
+
+allt[is.na(allt)]<- 0
+cvt<- matrix(0,ncol=20,nrow=20)
+
+for (i in 1:20){
+  for (j in 1:20){
+    cvt[i,j]<- mean(allt[i,j,1:20])
+  }
+}
+
+#hist(allt)
+z<- qnorm(pt(cvt,13))
+z_null<- z
+z_null[is.na(z_null)] <- 0
+hist(z_null,30)
+
+qqnorm(z_null)
+qqline(z_null)
+```
+
+### replacement data sets created (random 1 as the original)
+```{r}
+options(scipen=999)
+random_from_wiki_2000 <- read_delim("~/random_from_wiki_2000.txt"," ", escape_double = FALSE, trim_ws = TRUE)
+random1_2000 <- read_delim("~/random1_2000.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+random_from_wiki_2000<- random_from_wiki_2000[4:2003,]
+random1_2000<- random1_2000[4:2003,]
+random_from_wiki_2000<- matrix(as.numeric(unlist(random_from_wiki_2000)),nrow=2000)
+random1_2000<- matrix(as.numeric(unlist(random1_2000)),nrow=2000)
+
+### rp 1
+rp<- sample(1:2000,1)
+random_rp1<- random1_2000
+random_rp1[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 2
+rp<- sample(1:2000,2)
+random_rp2<- random1_2000
+random_rp2[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 3
+rp<- sample(1:2000,3)
+random_rp3<- random1_2000
+random_rp3[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 4
+rp<- sample(1:2000,4)
+random_rp4<- random1_2000
+random_rp4[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 5
+rp<- sample(1:2000,5)
+random_rp5<- random1_2000
+random_rp5[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 6
+rp<- sample(1:2000,6)
+random_rp6<- random1_2000
+random_rp6[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 7
+rp<- sample(1:2000,7)
+random_rp7<- random1_2000
+random_rp7[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 8
+rp<- sample(1:2000,8)
+random_rp8<- random1_2000
+random_rp8[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 9
+rp<- sample(1:2000,9)
+random_rp9<- random1_2000
+random_rp9[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 10
+rp<- sample(1:2000,10)
+random_rp10<- random1_2000
+random_rp10[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 11
+rp<- sample(1:2000,11)
+random_rp11<- random1_2000
+random_rp11[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 12
+rp<- sample(1:2000,12)
+random_rp12<- random1_2000
+random_rp12[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 13
+rp<- sample(1:2000,13)
+random_rp13<- random1_2000
+random_rp13[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 14
+rp<- sample(1:2000,14)
+random_rp14<- random1_2000
+random_rp14[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+
+### rp 15
+rp<- sample(1:2000,15)
+random_rp15<- random1_2000
+random_rp15[rp,1:200]<- random_from_wiki_2000[rp,1:200]
+# 
+# write.table(random_rp1, "random_rp1.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp2, "random_rp2.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp3, "random_rp3.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp4, "random_rp4.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp5, "random_rp5.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp6, "random_rp6.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp7, "random_rp7.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp8, "random_rp8.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp9, "random_rp9.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp10, "random_rp10.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp11, "random_rp11.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp12, "random_rp12.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp13, "random_rp13.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp14, "random_rp14.txt",row.names=FALSE, na="", col.names = FALSE)
+# write.table(random_rp15, "random_rp15.txt",row.names=FALSE, na="", col.names = FALSE)
+
+```
+
+### Alternatives (random with rp)
+```{r}
+random_rp1_dim<- read_csv("~/random_rp1_H0_dim.txt", col_names = FALSE)
+random_rp2_dim<- read_csv("~/random_rp2_H0_dim.txt", col_names = FALSE)
+random_rp3_dim<- read_csv("~/random_rp3_H0_dim.txt", col_names = FALSE)
+random_rp4_dim<- read_csv("~/random_rp4_H0_dim.txt", col_names = FALSE)
+random_rp5_dim<- read_csv("~/random_rp5_H0_dim.txt", col_names = FALSE)
+random_rp6_dim<- read_csv("~/random_rp6_H0_dim.txt", col_names = FALSE)
+random_rp7_dim<- read_csv("~/random_rp7_H0_dim.txt", col_names = FALSE)
+random_rp8_dim<- read_csv("~/random_rp8_H0_dim.txt", col_names = FALSE)
+random_rp9_dim<- read_csv("~/random_rp9_H0_dim.txt", col_names = FALSE)
+random_rp10_dim<- read_csv("~/random_rp10_H0_dim.txt", col_names = FALSE)
+random_rp11_dim<- read_csv("~/random_rp11_H0_dim.txt", col_names = FALSE)
+random_rp12_dim<- read_csv("~/random_rp12_H0_dim.txt", col_names = FALSE)
+random_rp13_dim<- read_csv("~/random_rp13_H0_dim.txt", col_names = FALSE)
+random_rp14_dim<- read_csv("~/random_rp14_H0_dim.txt", col_names = FALSE)
+random_rp15_dim<- read_csv("~/random_rp15_H0_dim.txt", col_names = FALSE)
+
+random_rp1_dim$X1<- gsub("[^0-9]", "",random_rp1_dim$X1)
+random_rp1_dim$X3<- gsub("[^0-9]", "",random_rp1_dim$X3)
+random_rp2_dim$X1<- gsub("[^0-9]", "",random_rp2_dim$X1)
+random_rp2_dim$X3<- gsub("[^0-9]", "",random_rp2_dim$X3)
+random_rp3_dim$X1<- gsub("[^0-9]", "",random_rp3_dim$X1)
+random_rp3_dim$X3<- gsub("[^0-9]", "",random_rp3_dim$X3)
+random_rp4_dim$X1<- gsub("[^0-9]", "",random_rp4_dim$X1)
+random_rp4_dim$X3<- gsub("[^0-9]", "",random_rp4_dim$X3)
+random_rp5_dim$X1<- gsub("[^0-9]", "",random_rp5_dim$X1)
+random_rp5_dim$X3<- gsub("[^0-9]", "",random_rp5_dim$X3)
+random_rp6_dim$X1<- gsub("[^0-9]", "",random_rp6_dim$X1)
+random_rp6_dim$X3<- gsub("[^0-9]", "",random_rp6_dim$X3)
+random_rp7_dim$X1<- gsub("[^0-9]", "",random_rp7_dim$X1)
+random_rp7_dim$X3<- gsub("[^0-9]", "",random_rp7_dim$X3)
+random_rp8_dim$X1<- gsub("[^0-9]", "",random_rp8_dim$X1)
+random_rp8_dim$X3<- gsub("[^0-9]", "",random_rp8_dim$X3)
+random_rp9_dim$X1<- gsub("[^0-9]", "",random_rp9_dim$X1)
+random_rp9_dim$X3<- gsub("[^0-9]", "",random_rp9_dim$X3)
+random_rp10_dim$X1<- gsub("[^0-9]", "",random_rp10_dim$X1)
+random_rp10_dim$X3<- gsub("[^0-9]", "",random_rp10_dim$X3)
+random_rp11_dim$X1<- gsub("[^0-9]", "",random_rp11_dim$X1)
+random_rp11_dim$X3<- gsub("[^0-9]", "",random_rp11_dim$X3)
+random_rp12_dim$X1<- gsub("[^0-9]", "",random_rp12_dim$X1)
+random_rp12_dim$X3<- gsub("[^0-9]", "",random_rp12_dim$X3)
+random_rp13_dim$X1<- gsub("[^0-9]", "",random_rp13_dim$X1)
+random_rp13_dim$X3<- gsub("[^0-9]", "",random_rp13_dim$X3)
+random_rp14_dim$X1<- gsub("[^0-9]", "",random_rp14_dim$X1)
+random_rp14_dim$X3<- gsub("[^0-9]", "",random_rp14_dim$X3)
+random_rp15_dim$X1<- gsub("[^0-9]", "",random_rp15_dim$X1)
+random_rp15_dim$X3<- gsub("[^0-9]", "",random_rp15_dim$X3)
+
+random_rp1_dim<- matrix(as.numeric(random_rp1_dim$X3), ncol=20, byrow=F)
+random_rp2_dim<- matrix(as.numeric(random_rp2_dim$X3), ncol=20, byrow=F)
+random_rp3_dim<- matrix(as.numeric(random_rp3_dim$X3), ncol=20, byrow=F)
+random_rp4_dim<- matrix(as.numeric(random_rp4_dim$X3), ncol=20, byrow=F)
+random_rp5_dim<- matrix(as.numeric(random_rp5_dim$X3), ncol=20, byrow=F)
+random_rp6_dim<- matrix(as.numeric(random_rp6_dim$X3), ncol=20, byrow=F)
+random_rp7_dim<- matrix(as.numeric(random_rp7_dim$X3), ncol=20, byrow=F)
+random_rp8_dim<- matrix(as.numeric(random_rp8_dim$X3), ncol=20, byrow=F)
+random_rp9_dim<- matrix(as.numeric(random_rp9_dim$X3), ncol=20, byrow=F)
+random_rp10_dim<- matrix(as.numeric(random_rp10_dim$X3), ncol=20, byrow=F)
+random_rp11_dim<- matrix(as.numeric(random_rp11_dim$X3), ncol=20, byrow=F)
+random_rp12_dim<- matrix(as.numeric(random_rp12_dim$X3), ncol=20, byrow=F)
+random_rp13_dim<- matrix(as.numeric(random_rp13_dim$X3), ncol=20, byrow=F)
+random_rp14_dim<- matrix(as.numeric(random_rp14_dim$X3), ncol=20, byrow=F)
+random_rp15_dim<- matrix(as.numeric(random_rp15_dim$X3), ncol=20, byrow=F)
+
+large_scale<- array(c(random_rp1_dim, random_rp2_dim, random_rp3_dim, random_rp4_dim, random_rp5_dim, random_rp6_dim, random_rp7_dim, random_rp8_dim, random_rp9_dim, random_rp10_dim, random_rp11_dim, random_rp12_dim, random_rp13_dim, random_rp14_dim, random_rp15_dim, random1_dim, random2_dim, random3_dim, random4_dim, random5_dim, random6_dim, random7_dim, random8_dim, random9_dim, random10_dim, random11_dim, random12_dim, random13_dim, random14_dim, random15_dim), dim=c(20,20,30))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:15])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,16:30])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2,(large_scale[i,j,5]-x1[1,j])^2,(large_scale[i,j,6]-x1[1,j])^2,(large_scale[i,j,7]-x1[1,j])^2,(large_scale[i,j,8]-x1[1,j])^2,(large_scale[i,j,9]-x1[1,j])^2,(large_scale[i,j,10]-x1[1,j])^2,(large_scale[i,j,11]-x1[1,j])^2,(large_scale[i,j,12]-x1[1,j])^2,(large_scale[i,j,13]-x1[1,j])^2,(large_scale[i,j,14]-x1[1,j])^2, (large_scale[i,j,15]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,16]-x2[1,j])^2,(large_scale[i,j,17]-x2[1,j])^2,(large_scale[i,j,18]-x2[1,j])^2,
+                 (large_scale[i,j,19]-x2[1,j])^2,(large_scale[i,j,20]-x2[1,j])^2,(large_scale[i,j,21]-x2[1,j])^2,(large_scale[i,j,22]-x2[1,j])^2,(large_scale[i,j,23]-x2[1,j])^2,(large_scale[i,j,24]-x2[1,j])^2,(large_scale[i,j,25]-x2[1,j])^2,(large_scale[i,j,26]-x2[1,j])^2,(large_scale[i,j,27]-x2[1,j])^2,(large_scale[i,j,28]-x2[1,j])^2,(large_scale[i,j,29]-x2[1,j])^2,(large_scale[i,j,30]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/28*1/30
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,28))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=5) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.025/400),na.rm = T)+sum(z<quantile(z_null,0.025/400),na.rm = T)
+table<- z
+table_01_random<- ifelse((z>quantile(z_null,1-0.025/400)|z<quantile(z_null,0.025/400)),1,0)
+
+```
+
+### use the same rank when we introduce the new vector
