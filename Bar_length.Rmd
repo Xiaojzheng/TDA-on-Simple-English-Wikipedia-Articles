@@ -1,0 +1,908 @@
+---
+title: "Bar length"
+output: html_document
+---
+
+# This file contains code for Two-Sample t-Test on Bar Lengths
+
+### bar length of the top 50 longest
+```{r}
+random1_bar_long<- sort(random1_bar, decreasing = T)
+random1_bar_long<- random1_bar_long[1:50]
+random2_bar_long<- sort(random2_bar, decreasing = T)
+random2_bar_long<- random2_bar_long[1:50]
+random3_bar_long<- sort(random3_bar, decreasing = T)
+random3_bar_long<- random3_bar_long[1:50]
+random4_bar_long<- sort(random4_bar, decreasing = T)
+random4_bar_long<- random4_bar_long[1:50]
+random5_bar_long<- sort(random5_bar, decreasing = T)
+random5_bar_long<- random5_bar_long[1:50]
+
+random_bar_long<- rbind(random1_bar_long, random2_bar_long, random3_bar_long, random4_bar_long, random5_bar_long)
+
+null_mean<- matrix(0,nrow=1000,ncol=50)
+for (i in 1:1000){
+  samp<- sample(1:nrow(random_bar_long),nrow(random_bar_long), replace=T)
+  avg<- apply(random_bar_long[samp,],2,mean)
+  null_mean[i,]<- avg
+}
+
+null_mean<- apply(null_mean,2,mean)
+
+# null_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(random_bar_long),length(random_bar_long), replace=T)
+#   avg<- mean(random_bar_long[samp])
+#   null_mean<- c(null_mean, avg)
+# }
+
+hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+wiki1_bar_long<- sort(wiki1_bar,decreasing = T)
+wiki1_bar_long<- wiki1_bar_long[1:50]
+wiki2_bar_long<- sort(wiki2_bar,decreasing = T)
+wiki2_bar_long<- wiki2_bar_long[1:50]
+wiki3_bar_long<- sort(wiki3_bar,decreasing = T)
+wiki3_bar_long<- wiki3_bar_long[1:50]
+wiki4_bar_long<- sort(wiki4_bar,decreasing = T)
+wiki4_bar_long<- wiki4_bar_long[1:50]
+wiki5_bar_long<- sort(wiki5_bar,decreasing = T)
+wiki5_bar_long<- wiki5_bar_long[1:50]
+
+wiki_bar_long<- rbind(wiki1_bar_long, wiki2_bar_long, wiki3_bar_long, wiki4_bar_long, wiki5_bar_long)
+
+wiki_mean<- matrix(0,nrow=1000,ncol=50)
+for (i in 1:1000){
+  samp<- sample(1:nrow(wiki_bar_long),nrow(wiki_bar_long), replace=T)
+  avg<- apply(wiki_bar_long[samp,],2,mean)
+  wiki_mean[i,]<- avg
+}
+
+wiki_mean<- apply(wiki_mean,2,mean)
+
+# wiki_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(wiki_bar_long),length(wiki_bar_long), replace=T)
+#   avg<- mean(wiki_bar_long[samp])
+#   wiki_mean<- c(wiki_mean, avg)
+# }
+
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+lines(density(wiki_mean, adjust=2), col="darkgreen", lwd=3) 
+
+a<- wiki1_bar_long[1:100]
+b<- random1_bar_long[1:100]
+a
+b
+
+```
+
+### Large scale testing on H1 for null
+```{r}
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random1_dim_H1<- read_csv("~/random1_H1_dim.txt", col_names = FALSE)
+random1_dim_H1$X1<- gsub("[^0-9]", "",random1_dim_H1$X1)
+random1_dim_H1$X3<- gsub("[^0-9]", "",random1_dim_H1$X3)
+random1_dim_H1<- as.data.frame(lapply(as.data.frame(random1_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random1_dim_H1$X1) & (zero_dim[i,2] == random1_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random1_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random1_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random2_dim_H1<- read_csv("~/random2_H1_dim.txt", col_names = FALSE)
+random2_dim_H1$X1<- gsub("[^0-9]", "",random2_dim_H1$X1)
+random2_dim_H1$X3<- gsub("[^0-9]", "",random2_dim_H1$X3)
+random2_dim_H1<- as.data.frame(lapply(as.data.frame(random2_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random2_dim_H1$X1) & (zero_dim[i,2] == random2_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random2_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random2_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random3_dim_H1<- read_csv("~/random3_H1_dim.txt", col_names = FALSE)
+random3_dim_H1$X1<- gsub("[^0-9]", "",random3_dim_H1$X1)
+random3_dim_H1$X3<- gsub("[^0-9]", "",random3_dim_H1$X3)
+random3_dim_H1<- as.data.frame(lapply(as.data.frame(random3_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random3_dim_H1$X1) & (zero_dim[i,2] == random3_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random3_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random3_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random4_dim_H1<- read_csv("~/random4_H1_dim.txt", col_names = FALSE)
+random4_dim_H1$X1<- gsub("[^0-9]", "",random4_dim_H1$X1)
+random4_dim_H1$X3<- gsub("[^0-9]", "",random4_dim_H1$X3)
+random4_dim_H1<- as.data.frame(lapply(as.data.frame(random4_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random4_dim_H1$X1) & (zero_dim[i,2] == random4_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random4_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random4_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random5_dim_H1<- read_csv("~/random5_H1_dim.txt", col_names = FALSE)
+random5_dim_H1$X1<- gsub("[^0-9]", "",random5_dim_H1$X1)
+random5_dim_H1$X3<- gsub("[^0-9]", "",random5_dim_H1$X3)
+random5_dim_H1<- as.data.frame(lapply(as.data.frame(random5_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random5_dim_H1$X1) & (zero_dim[i,2] == random5_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random5_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random5_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random6_dim_H1<- read_csv("~/random6_H1_dim.txt", col_names = FALSE)
+random6_dim_H1$X1<- gsub("[^0-9]", "",random6_dim_H1$X1)
+random6_dim_H1$X3<- gsub("[^0-9]", "",random6_dim_H1$X3)
+random6_dim_H1<- as.data.frame(lapply(as.data.frame(random6_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random6_dim_H1$X1) & (zero_dim[i,2] == random6_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random6_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random6_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random7_dim_H1<- read_csv("~/random7_H1_dim.txt", col_names = FALSE)
+random7_dim_H1$X1<- gsub("[^0-9]", "",random7_dim_H1$X1)
+random7_dim_H1$X3<- gsub("[^0-9]", "",random7_dim_H1$X3)
+random7_dim_H1<- as.data.frame(lapply(as.data.frame(random7_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random7_dim_H1$X1) & (zero_dim[i,2] == random7_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random7_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random7_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random8_dim_H1<- read_csv("~/random8_H1_dim.txt", col_names = FALSE)
+random8_dim_H1$X1<- gsub("[^0-9]", "",random8_dim_H1$X1)
+random8_dim_H1$X3<- gsub("[^0-9]", "",random8_dim_H1$X3)
+random8_dim_H1<- as.data.frame(lapply(as.data.frame(random8_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random8_dim_H1$X1) & (zero_dim[i,2] == random8_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random8_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random8_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random9_dim_H1<- read_csv("~/random9_H1_dim.txt", col_names = FALSE)
+random9_dim_H1$X1<- gsub("[^0-9]", "",random9_dim_H1$X1)
+random9_dim_H1$X3<- gsub("[^0-9]", "",random9_dim_H1$X3)
+random9_dim_H1<- as.data.frame(lapply(as.data.frame(random9_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random9_dim_H1$X1) & (zero_dim[i,2] == random9_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random9_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random9_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random10_dim_H1<- read_csv("~/random10_H1_dim.txt", col_names = FALSE)
+random10_dim_H1$X1<- gsub("[^0-9]", "",random10_dim_H1$X1)
+random10_dim_H1$X3<- gsub("[^0-9]", "",random10_dim_H1$X3)
+random10_dim_H1<- as.data.frame(lapply(as.data.frame(random10_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random10_dim_H1$X1) & (zero_dim[i,2] == random10_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random10_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random10_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random11_dim_H1<- read_csv("~/random11_H1_dim.txt", col_names = FALSE)
+random11_dim_H1$X1<- gsub("[^0-9]", "",random11_dim_H1$X1)
+random11_dim_H1$X3<- gsub("[^0-9]", "",random11_dim_H1$X3)
+random11_dim_H1<- as.data.frame(lapply(as.data.frame(random11_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random11_dim_H1$X1) & (zero_dim[i,2] == random11_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random11_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random11_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random12_dim_H1<- read_csv("~/random12_H1_dim.txt", col_names = FALSE)
+random12_dim_H1$X1<- gsub("[^0-9]", "",random12_dim_H1$X1)
+random12_dim_H1$X3<- gsub("[^0-9]", "",random12_dim_H1$X3)
+random12_dim_H1<- as.data.frame(lapply(as.data.frame(random12_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random12_dim_H1$X1) & (zero_dim[i,2] == random12_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random12_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random12_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random13_dim_H1<- read_csv("~/random13_H1_dim.txt", col_names = FALSE)
+random13_dim_H1$X1<- gsub("[^0-9]", "",random13_dim_H1$X1)
+random13_dim_H1$X3<- gsub("[^0-9]", "",random13_dim_H1$X3)
+random13_dim_H1<- as.data.frame(lapply(as.data.frame(random13_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random13_dim_H1$X1) & (zero_dim[i,2] == random13_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random13_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random13_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random14_dim_H1<- read_csv("~/random14_H1_dim.txt", col_names = FALSE)
+random14_dim_H1$X1<- gsub("[^0-9]", "",random14_dim_H1$X1)
+random14_dim_H1$X3<- gsub("[^0-9]", "",random14_dim_H1$X3)
+random14_dim_H1<- as.data.frame(lapply(as.data.frame(random14_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random14_dim_H1$X1) & (zero_dim[i,2] == random14_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random14_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random14_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+random15_dim_H1<- read_csv("~/random15_H1_dim.txt", col_names = FALSE)
+random15_dim_H1$X1<- gsub("[^0-9]", "",random15_dim_H1$X1)
+random15_dim_H1$X3<- gsub("[^0-9]", "",random15_dim_H1$X3)
+random15_dim_H1<- as.data.frame(lapply(as.data.frame(random15_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == random15_dim_H1$X1) & (zero_dim[i,2] == random15_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = random15_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+random15_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+
+### starting from here
+
+
+large_scale<- array(c(random1_dim_H1_all, random2_dim_H1_all, random3_dim_H1_all, random4_dim_H1_all, random5_dim_H1_all, random6_dim_H1_all, random7_dim_H1_all, random8_dim_H1_all, random9_dim_H1_all, random10_dim_H1_all, random11_dim_H1_all, random12_dim_H1_all, random13_dim_H1_all, random14_dim_H1_all, random15_dim_H1_all), dim=c(20,20,15))
+
+
+allt<- array(0,dim=c(20,20,500))
+for (m in 1:500){
+
+group1<- sample(1:15,7)  
+all<- seq(1,15,1)
+group2<- all[is.na(pmatch(all,group1))]
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,group1])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,group2])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,group1[1]]-x1[1,j])^2,(large_scale[i,j,group1[2]]-x1[1,j])^2,(large_scale[i,j,group1[3]]-x1[1,j])^2,(large_scale[i,j,group1[4]]-x1[1,j])^2,(large_scale[i,j,group1[5]]-x1[1,j])^2,(large_scale[i,j,group1[6]]-x1[1,j])^2,(large_scale[i,j,group1[7]]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,group2[1]]-x2[1,j])^2,(large_scale[i,j,group2[2]]-x2[1,j])^2,(large_scale[i,j,group2[3]]-x2[1,j])^2,
+                 (large_scale[i,j,group2[4]]-x2[1,j])^2,(large_scale[i,j,group2[5]]-x2[1,j])^2,(large_scale[i,j,group2[6]]-x2[1,j])^2,(large_scale[i,j,group2[7]]-x2[1,j])^2,(large_scale[i,j,group2[8]]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/13*1/15
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+allt[,,m] <- t
+print(m)
+}
+
+allt[is.na(allt)]<- 0
+cvt<- matrix(0,ncol=20,nrow=20)
+
+for (i in 1:20){
+  for (j in 1:20){
+    cvt[i,j]<- mean(allt[i,j,1:20])
+  }
+}
+
+#hist(allt)
+z<- qnorm(pt(cvt,13))
+z_null<- z
+z_null[is.na(z_null)] <- 0
+hist(z_null,30)
+
+qqnorm(z_null)
+qqline(z_null)
+```
+
+
+### large scale testing (15 samples)
+```{r}
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki1_dim_H1<- read_csv("~/wiki_sample1_H1_dim.txt", col_names = FALSE)
+wiki1_dim_H1$X1<- gsub("[^0-9]", "",wiki1_dim_H1$X1)
+wiki1_dim_H1$X3<- gsub("[^0-9]", "",wiki1_dim_H1$X3)
+wiki1_dim_H1<- as.data.frame(lapply(as.data.frame(wiki1_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki1_dim_H1$X1) & (zero_dim[i,2] == wiki1_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki1_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki1_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki2_dim_H1<- read_csv("~/wiki_sample2_H1_dim.txt", col_names = FALSE)
+wiki2_dim_H1$X1<- gsub("[^0-9]", "",wiki2_dim_H1$X1)
+wiki2_dim_H1$X3<- gsub("[^0-9]", "",wiki2_dim_H1$X3)
+wiki2_dim_H1<- as.data.frame(lapply(as.data.frame(wiki2_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki2_dim_H1$X1) & (zero_dim[i,2] == wiki2_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki2_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki2_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki3_dim_H1<- read_csv("~/wiki_sample3_H1_dim.txt", col_names = FALSE)
+wiki3_dim_H1$X1<- gsub("[^0-9]", "",wiki3_dim_H1$X1)
+wiki3_dim_H1$X3<- gsub("[^0-9]", "",wiki3_dim_H1$X3)
+wiki3_dim_H1<- as.data.frame(lapply(as.data.frame(wiki3_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki3_dim_H1$X1) & (zero_dim[i,2] == wiki3_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki3_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki3_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki4_dim_H1<- read_csv("~/wiki_sample4_H1_dim.txt", col_names = FALSE)
+wiki4_dim_H1$X1<- gsub("[^0-9]", "",wiki4_dim_H1$X1)
+wiki4_dim_H1$X3<- gsub("[^0-9]", "",wiki4_dim_H1$X3)
+wiki4_dim_H1<- as.data.frame(lapply(as.data.frame(wiki4_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki4_dim_H1$X1) & (zero_dim[i,2] == wiki4_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki4_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki4_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki5_dim_H1<- read_csv("~/wiki_sample5_H1_dim.txt", col_names = FALSE)
+wiki5_dim_H1$X1<- gsub("[^0-9]", "",wiki5_dim_H1$X1)
+wiki5_dim_H1$X3<- gsub("[^0-9]", "",wiki5_dim_H1$X3)
+wiki5_dim_H1<- as.data.frame(lapply(as.data.frame(wiki5_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki5_dim_H1$X1) & (zero_dim[i,2] == wiki5_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki5_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki5_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki6_dim_H1<- read_csv("~/wiki_sample6_H1_dim.txt", col_names = FALSE)
+wiki6_dim_H1$X1<- gsub("[^0-9]", "",wiki6_dim_H1$X1)
+wiki6_dim_H1$X3<- gsub("[^0-9]", "",wiki6_dim_H1$X3)
+wiki6_dim_H1<- as.data.frame(lapply(as.data.frame(wiki6_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki6_dim_H1$X1) & (zero_dim[i,2] == wiki6_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki6_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki6_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki7_dim_H1<- read_csv("~/wiki_sample7_H1_dim.txt", col_names = FALSE)
+wiki7_dim_H1$X1<- gsub("[^0-9]", "",wiki7_dim_H1$X1)
+wiki7_dim_H1$X3<- gsub("[^0-9]", "",wiki7_dim_H1$X3)
+wiki7_dim_H1<- as.data.frame(lapply(as.data.frame(wiki7_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki7_dim_H1$X1) & (zero_dim[i,2] == wiki7_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki7_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki7_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki8_dim_H1<- read_csv("~/wiki_sample8_H1_dim.txt", col_names = FALSE)
+wiki8_dim_H1$X1<- gsub("[^0-9]", "",wiki8_dim_H1$X1)
+wiki8_dim_H1$X3<- gsub("[^0-9]", "",wiki8_dim_H1$X3)
+wiki8_dim_H1<- as.data.frame(lapply(as.data.frame(wiki8_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki8_dim_H1$X1) & (zero_dim[i,2] == wiki8_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki8_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki8_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki9_dim_H1<- read_csv("~/wiki_sample9_H1_dim.txt", col_names = FALSE)
+wiki9_dim_H1$X1<- gsub("[^0-9]", "",wiki9_dim_H1$X1)
+wiki9_dim_H1$X3<- gsub("[^0-9]", "",wiki9_dim_H1$X3)
+wiki9_dim_H1<- as.data.frame(lapply(as.data.frame(wiki9_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki9_dim_H1$X1) & (zero_dim[i,2] == wiki9_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki9_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki9_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki10_dim_H1<- read_csv("~/wiki_sample10_H1_dim.txt", col_names = FALSE)
+wiki10_dim_H1$X1<- gsub("[^0-9]", "",wiki10_dim_H1$X1)
+wiki10_dim_H1$X3<- gsub("[^0-9]", "",wiki10_dim_H1$X3)
+wiki10_dim_H1<- as.data.frame(lapply(as.data.frame(wiki10_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki10_dim_H1$X1) & (zero_dim[i,2] == wiki10_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki10_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki10_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki11_dim_H1<- read_csv("~/wiki_sample11_H1_dim.txt", col_names = FALSE)
+wiki11_dim_H1$X1<- gsub("[^0-9]", "",wiki11_dim_H1$X1)
+wiki11_dim_H1$X3<- gsub("[^0-9]", "",wiki11_dim_H1$X3)
+wiki11_dim_H1<- as.data.frame(lapply(as.data.frame(wiki11_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki11_dim_H1$X1) & (zero_dim[i,2] == wiki11_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki11_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki11_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki12_dim_H1<- read_csv("~/wiki_sample12_H1_dim.txt", col_names = FALSE)
+wiki12_dim_H1$X1<- gsub("[^0-9]", "",wiki12_dim_H1$X1)
+wiki12_dim_H1$X3<- gsub("[^0-9]", "",wiki12_dim_H1$X3)
+wiki12_dim_H1<- as.data.frame(lapply(as.data.frame(wiki12_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki12_dim_H1$X1) & (zero_dim[i,2] == wiki12_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki12_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki12_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki13_dim_H1<- read_csv("~/wiki_sample13_H1_dim.txt", col_names = FALSE)
+wiki13_dim_H1$X1<- gsub("[^0-9]", "",wiki13_dim_H1$X1)
+wiki13_dim_H1$X3<- gsub("[^0-9]", "",wiki13_dim_H1$X3)
+wiki13_dim_H1<- as.data.frame(lapply(as.data.frame(wiki13_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki13_dim_H1$X1) & (zero_dim[i,2] == wiki13_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki13_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki13_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki14_dim_H1<- read_csv("~/wiki_sample14_H1_dim.txt", col_names = FALSE)
+wiki14_dim_H1$X1<- gsub("[^0-9]", "",wiki14_dim_H1$X1)
+wiki14_dim_H1$X3<- gsub("[^0-9]", "",wiki14_dim_H1$X3)
+wiki14_dim_H1<- as.data.frame(lapply(as.data.frame(wiki14_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki14_dim_H1$X1) & (zero_dim[i,2] == wiki14_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki14_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki14_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+zero_dim<- as.data.frame(cbind(X1=rep(0:19,each=20),X2=rep(0:19,20),x3=rep(0,400)))
+
+wiki15_dim_H1<- read_csv("~/wiki_sample15_H1_dim.txt", col_names = FALSE)
+wiki15_dim_H1$X1<- gsub("[^0-9]", "",wiki15_dim_H1$X1)
+wiki15_dim_H1$X3<- gsub("[^0-9]", "",wiki15_dim_H1$X3)
+wiki15_dim_H1<- as.data.frame(lapply(as.data.frame(wiki15_dim_H1), as.numeric))
+
+num=c()
+j=1
+for (i in 1:400){
+  if (sum((zero_dim[i,1] == wiki15_dim_H1$X1) & (zero_dim[i,2] == wiki15_dim_H1$X2))==1){
+    num=c(num,i)
+    zero_dim[i,3] = wiki15_dim_H1[j,3]
+    j=j+1
+  }
+}
+
+wiki15_dim_H1_all<- matrix(zero_dim$x3, ncol=20, byrow=F)
+
+large_scale<- array(c(wiki1_dim_H1_all, wiki2_dim_H1_all, wiki3_dim_H1_all, wiki4_dim_H1_all, wiki5_dim_H1_all, wiki6_dim_H1_all, wiki7_dim_H1_all, wiki8_dim_H1_all, wiki9_dim_H1_all, wiki10_dim_H1_all, wiki11_dim_H1_all, wiki12_dim_H1_all, wiki13_dim_H1_all, wiki14_dim_H1_all, wiki15_dim_H1_all, random1_dim_H1_all, random2_dim_H1_all, random3_dim_H1_all, random4_dim_H1_all, random5_dim_H1_all, random6_dim_H1_all, random7_dim_H1_all, random8_dim_H1_all, random9_dim_H1_all, random10_dim_H1_all, random11_dim_H1_all, random12_dim_H1_all, random13_dim_H1_all, random14_dim_H1_all, random15_dim_H1_all), dim=c(20,20,30))
+
+x1<- c()
+x2<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_mean<- mean(large_scale[i,j,1:15])
+    x1<- c(x1,x1_mean)
+    x2_mean<- mean(large_scale[i,j,16:30])
+    x2<- c(x2,x2_mean)
+  }
+}
+
+x1<- matrix(x1,ncol=20, byrow=T)
+x2<- matrix(x2,ncol=20, byrow=T)
+
+x1_s<- c()
+x2_s<- c()
+
+for (i in 1:20){
+  for (j in 1:20){
+    x1_sqr<- sum((large_scale[i,j,1]-x1[1,j])^2,(large_scale[i,j,2]-x1[1,j])^2,(large_scale[i,j,3]-x1[1,j])^2,(large_scale[i,j,4]-x1[1,j])^2,(large_scale[i,j,5]-x1[1,j])^2,(large_scale[i,j,6]-x1[1,j])^2,(large_scale[i,j,7]-x1[1,j])^2,(large_scale[i,j,8]-x1[1,j])^2,(large_scale[i,j,9]-x1[1,j])^2,(large_scale[i,j,10]-x1[1,j])^2,(large_scale[i,j,11]-x1[1,j])^2,(large_scale[i,j,12]-x1[1,j])^2,(large_scale[i,j,13]-x1[1,j])^2,(large_scale[i,j,14]-x1[1,j])^2, (large_scale[i,j,15]-x1[1,j])^2)
+    x1_s<- c(x1_s,x1_sqr)
+    x2_sqr<- sum((large_scale[i,j,16]-x2[1,j])^2,(large_scale[i,j,17]-x2[1,j])^2,(large_scale[i,j,18]-x2[1,j])^2,
+                 (large_scale[i,j,19]-x2[1,j])^2,(large_scale[i,j,20]-x2[1,j])^2,(large_scale[i,j,21]-x2[1,j])^2,(large_scale[i,j,22]-x2[1,j])^2,(large_scale[i,j,23]-x2[1,j])^2,(large_scale[i,j,24]-x2[1,j])^2,(large_scale[i,j,25]-x2[1,j])^2,(large_scale[i,j,26]-x2[1,j])^2,(large_scale[i,j,27]-x2[1,j])^2,(large_scale[i,j,28]-x2[1,j])^2,(large_scale[i,j,29]-x2[1,j])^2,(large_scale[i,j,30]-x2[1,j])^2)
+    x2_s<- c(x2_s,x2_sqr)
+  }
+}
+
+s_sqr<- (x1_s+x2_s)/28*1/30
+s_sqr<- matrix(s_sqr,ncol=20, byrow=T)
+t<- (x2-x1)/sqrt(s_sqr)
+hist(t)
+z<- qnorm(pt(t,28))
+z[is.na(z)]<- 0
+hist(z)
+
+null_dist<- density(z_null)
+hist(z,30)
+lines(null_dist)
+
+h<-hist(z_null, breaks=10) 
+xfit<-seq(min(z_null),max(z_null),length=40) 
+yfit<-dnorm(xfit,mean=mean(z_null),sd=sd(z_null)) 
+yfit <- yfit*diff(h$mids[1:2])*length(z_null)  
+lines(xfit, yfit, col="blue", lwd=2)
+
+hist(z,30,ylim=c(0,350),xlab="z-scores", main="Histogram of z-scores")
+lines(xfit, yfit, col="blue", lwd=2)
+
+sum(z>quantile(z_null,1-0.025/400),na.rm = T)+sum(z<quantile(z_null,0.025/400),na.rm=T) ### 193
+table<- z
+table_01<- ifelse((z>quantile(z_null,1-0.025/400)|z<quantile(z_null,0.025/400)),1,0)
+
+```
+
+
+### Distribution of bar lengths (H1)
+```{r}
+random1_bar<- c(rep(13.6988-12.6283,122),rep(14.7693-13.6988,294))
+random2_bar<- c(rep(17.0605-15.99,109),rep(18.131-17.0605,400))
+random3_bar<- c(rep(1.85831-1.73,109),rep(1.98662-1.85831,320))
+random4_bar<- c(rep(12.5782-11.5076,82),rep(13.6487-12.5782,403),rep(14.7192-13.6487,2))
+random5_bar<- c(rep(1.63718-1.53485,102),rep(1.7395-1.63718,363),rep(1.84182-1.7395,1))
+random_bar<- c(random1_bar,random2_bar,random3_bar,random4_bar,random5_bar)
+hist(random_bar)
+
+null_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(random_bar),length(random_bar), replace=T)
+  avg<- mean(random_bar[samp])
+  null_mean<- c(null_mean, avg)
+}
+hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+wiki1_bar<- c(rep(-(10.4871-13.6987),1),rep(-(8.34612-10.4871),1),rep(-(11.5577-13.6987),19),rep(-(6.2051-7.27561),1),rep(-(7.27561-8.34612),5),rep(-(8.34612-9.41663),3),rep(-(9.41663-10.4871),5),rep(-(10.4871-11.5577),49),rep(-(11.5577-12.6282),115),rep(-(12.6282-13.6987),234),rep(-(13.6987-14.7692),49))		
+
+wiki2_bar<- c(rep(-(13.8491-15.9901),1),rep(-(14.9196-17.0606),21),rep(-(7.42596-8.49648),1),rep(-(9.567-10.6375),1),rep(-(10.6375-11.708),2),rep(-(11.708-12.7786),1),rep(-(12.7786-13.8491),10),rep(-(13.8491-14.9196),36),rep(-(14.9196-15.9901),108),rep(-(15.9901-17.0606),217),rep(-(17.0606-18.1312),37))
+
+wiki3_bar<- c(rep(-(1.47332-1.72993),2),rep(-(1.60162-1.85824),26),rep(-(1.72993-1.98654),2),rep(-(1.0884-1.21671),1),rep(-(1.21671-1.34501),6),rep(-(1.34501-1.47332),12),rep(-(1.47332-1.60162),28),rep(-(1.60162-1.72993),103),rep(-(1.72993-1.85824),216),rep(-(1.85824-1.98654),56),rep(-(1.15127-1.21671),1),rep(-(1.0884-1.15127),1))			
+
+wiki4_bar<- c(rep(-(10.4365-12.5775),20),rep(-(4.0137-5.08418),2),rep(-(6.15465-7.22512),5),rep(-(7.22512-8.2956),3),rep(-(8.2956-9.36607),15),rep(-(9.36607-10.4365),37),rep(-(10.4365-11.507),98),rep(-(11.507-12.5775),234),rep(-(12.5775-13.648),34),rep(-(0.902624-0.952714),1))			
+
+wiki5_bar<- c(rep(-(1.43235-1.63698),19),rep(-(1.37938-1.53467),2), rep(-(1.12542-1.22773),2), rep(-(1.22773-1.33004),20),rep(-(1.33004-1.43235),20),rep(-(1.43235-1.53467),134),rep(-(1.53467-1.63698),247),rep(-(1.63698-1.73929),43),rep(-(1.29926-1.33004),2),rep(-(1.12542-1.13904),1))			
+
+
+wiki_bar<- c(wiki1_bar, wiki2_bar, wiki3_bar, wiki4_bar, wiki5_bar)
+
+wiki_mean<- c()
+for (i in 1:1000){
+  samp<- sample(1:length(wiki_bar),length(wiki_bar), replace=T)
+  avg<- mean(wiki_bar[samp])
+  wiki_mean<- c(wiki_mean, avg)
+}
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+lines(density(wiki_mean, adjust=2), col="red", lwd=3) 
+#abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+### Put both in the same plot
+hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance",xlim=c(0.67,0.75))
+lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+sum(wiki_mean>as.numeric(quantile(null_mean, 0.95)))/length(wiki_mean)
+
+```
+
+### bar length of the top 50 longest
+```{r}
+random1_bar_long<- sort(random1_bar, decreasing = T)
+random1_bar_long<- random1_bar_long[1:50]
+random2_bar_long<- sort(random2_bar, decreasing = T)
+random2_bar_long<- random2_bar_long[1:50]
+random3_bar_long<- sort(random3_bar, decreasing = T)
+random3_bar_long<- random3_bar_long[1:50]
+random4_bar_long<- sort(random4_bar, decreasing = T)
+random4_bar_long<- random4_bar_long[1:50]
+random5_bar_long<- sort(random5_bar, decreasing = T)
+random5_bar_long<- random5_bar_long[1:50]
+
+random_bar_long<- rbind(random1_bar_long, random2_bar_long, random3_bar_long, random4_bar_long, random5_bar_long)
+
+# null_mean<- matrix(0,nrow=1000,ncol=50)
+# for (i in 1:1000){
+#   samp<- sample(1:nrow(random_bar_long),nrow(random_bar_long), replace=T)
+#   avg<- apply(random_bar_long[samp,],2,mean)
+#   null_mean[i,]<- avg
+# }
+# 
+# null_mean<- apply(null_mean,2,mean)
+
+# null_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(random_bar_long),length(random_bar_long), replace=T)
+#   avg<- mean(random_bar_long[samp])
+#   null_mean<- c(null_mean, avg)
+# }
+
+# hist(null_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for matching distance")
+# lines(density(null_mean, adjust=2), col="darkgreen", lwd=3) 
+# abline(v=quantile(null_mean, 0.95),lty="dotted",col="red",lwd=2)
+
+wiki1_bar_long<- sort(wiki1_bar,decreasing = T)
+wiki1_bar_long<- wiki1_bar_long[1:50]
+wiki2_bar_long<- sort(wiki2_bar,decreasing = T)
+wiki2_bar_long<- wiki2_bar_long[1:50]
+wiki3_bar_long<- sort(wiki3_bar,decreasing = T)
+wiki3_bar_long<- wiki3_bar_long[1:50]
+wiki4_bar_long<- sort(wiki4_bar,decreasing = T)
+wiki4_bar_long<- wiki4_bar_long[1:50]
+wiki5_bar_long<- sort(wiki5_bar,decreasing = T)
+wiki5_bar_long<- wiki5_bar_long[1:50]
+
+wiki_bar_long<- rbind(wiki1_bar_long, wiki2_bar_long, wiki3_bar_long, wiki4_bar_long, wiki5_bar_long)
+
+# wiki_mean<- matrix(0,nrow=1000,ncol=50)
+# for (i in 1:1000){
+#   samp<- sample(1:nrow(wiki_bar_long),nrow(wiki_bar_long), replace=T)
+#   avg<- apply(wiki_bar_long[samp,],2,mean)
+#   wiki_mean[i,]<- avg
+# }
+# 
+# wiki_mean<- apply(wiki_mean,2,mean)
+
+# wiki_mean<- c()
+# for (i in 1:1000){
+#   samp<- sample(1:length(wiki_bar_long),length(wiki_bar_long), replace=T)
+#   avg<- mean(wiki_bar_long[samp])
+#   wiki_mean<- c(wiki_mean, avg)
+# }
+
+# hist(wiki_mean,30,freq=F,xlab="Matching Distance", ylab="Frequency", main="Null distribution for bar length")
+# lines(density(wiki_mean, adjust=2), col="darkgreen", lwd=3) 
+
+a<- wiki1_bar_long[1:50]
+b<- random1_bar_long[1:50]
+a
+b
+
+### only 21 bars in wiki1 are significantly longer than all the bars in random1
+```

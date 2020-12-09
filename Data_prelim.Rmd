@@ -1,0 +1,792 @@
+---
+title: "Data_prelim"
+author: "Xiaojun Zheng"
+date: "6/8/2018"
+output: html_document
+---
+
+# This file consists of some data cleaning and preliminary results
+
+### popularity 1-2000
+
+```{r}
+wiki1 <- read.csv("~/wiki1.csv") ### max2000 and random1
+wiki1<- wiki1[rowSums(is.na(wiki1)) != ncol(wiki1),]
+wiki1$weight<- wiki1$weighted_bottleneck/wiki1$raw_distance
+sum(wiki1$weight,na.rm = TRUE) ### 0.1286924
+unique(wiki1$weight)
+
+par(mfrow=c(4,2))
+
+plot(wiki1$slope,wiki1$weight,col="red")
+points(wiki1$slope,wiki1$weighted_bottleneck,col="green")
+
+plot(wiki1$slope,wiki1$raw_distance,col="blue")
+
+wiki1[which.max(wiki1$weighted_bottleneck),]
+wiki1[which.max(wiki1$raw_distance),]
+ 
+
+wiki2 <- read.csv("~/wiki2.csv") ### city2000 and random1
+wiki2<- wiki2[rowSums(is.na(wiki2)) != ncol(wiki2),]
+wiki2$weight<- wiki2$weighted_bottleneck/wiki2$raw_distance
+sum(wiki2$weight,na.rm = TRUE) ### 0.1286928
+
+
+plot(wiki2$slope,wiki2$weight,col="red")
+points(wiki2$slope,wiki2$weighted_bottleneck,col="green")
+
+plot(wiki2$slope,wiki2$raw_distance,col="blue")
+ 
+wiki2[which.max(wiki2$weighted_bottleneck),]
+wiki2[which.max(wiki2$raw_distance),]
+
+wiki3 <- read.csv("~/wiki3.csv") ### random from wiki 2000 and random1
+wiki3<- wiki3[rowSums(is.na(wiki3)) != ncol(wiki3),]
+wiki3$weight<- wiki3$weighted_bottleneck/wiki3$raw_distance
+sum(wiki3$weight,na.rm = TRUE) ### 0.128691
+
+
+plot(wiki3$slope,wiki3$weight,col="red")
+points(wiki3$slope,wiki3$weighted_bottleneck,col="green")
+
+plot(wiki3$slope,wiki3$raw_distance,col="blue")
+ 
+wiki3[which.max(wiki3$weighted_bottleneck),]
+wiki3[which.max(wiki3$raw_distance),]
+
+wiki4 <- read.csv("~/wiki4.csv") ### random1 and random2
+wiki4<- wiki4[rowSums(is.na(wiki4)) != ncol(wiki4),]
+wiki4$weight<- wiki4$weighted_bottleneck/wiki4$raw_distance
+sum(wiki4$weight,na.rm = TRUE) ### 0.128667
+
+
+plot(wiki4$slope,wiki4$weight,col="red")
+points(wiki4$slope,wiki4$weighted_bottleneck,col="green")
+
+plot(wiki4$slope,wiki4$raw_distance,col="blue")
+ 
+wiki4[which.max(wiki4$weighted_bottleneck),]
+wiki4[which.max(wiki4$raw_distance),]
+```
+
+
+### popularity 1/2000-1
+
+```{r}
+wiki1_new <- read.csv("~/wiki1_new.csv") ### max2000 and random1
+wiki1_new<- wiki1_new[rowSums(is.na(wiki1_new)) != ncol(wiki1_new),]
+wiki1_new$weight<- wiki1_new$weighted_bottleneck/wiki1_new$raw_distance
+sum(wiki1_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki1_new$weight)
+
+par(mfrow=c(4,2))
+
+plot(wiki1_new$angle,wiki1_new$weight,col="red")
+points(wiki1_new$angle,wiki1_new$weighted_bottleneck,col="green")
+
+plot(wiki1_new$angle,wiki1_new$raw_distance,col="blue")
+
+wiki1_new[which.max(wiki1_new$weighted_bottleneck),] ### 4.29
+wiki1_new[which.max(wiki1_new$raw_distance),] ### 4.29
+wiki1_new[which(wiki1_new$weighted_bottleneck>0.368),] ### 13 angles
+wiki1_new[which(wiki1_new$raw_distance>5),] ### 13 angles
+
+
+
+wiki2_new <- read.csv("~/wiki2_new.csv") ### city2000 and random1
+wiki2_new<- wiki2_new[rowSums(is.na(wiki2_new)) != ncol(wiki2_new),]
+wiki2_new$weight<- wiki2_new$weighted_bottleneck/wiki2_new$raw_distance
+sum(wiki2_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki2_new$weight)
+
+#par(mfrow=c(1,2))
+
+plot(wiki2_new$angle,wiki2_new$weight,col="red")
+points(wiki2_new$angle,wiki2_new$weighted_bottleneck,col="green")
+
+plot(wiki2_new$angle,wiki2_new$raw_distance,col="blue")
+
+wiki2_new[which.max(wiki2_new$weighted_bottleneck),] ### 47.1
+wiki2_new[which.max(wiki2_new$raw_distance),] ### 4.29
+wiki2_new[which(wiki2_new$weighted_bottleneck>0.368),] ### 29 angles
+
+
+wiki3_new <- read.csv("~/wiki3_new.csv") ### random and random1
+wiki3_new<- wiki3_new[rowSums(is.na(wiki3_new)) != ncol(wiki3_new),]
+wiki3_new$weight<- wiki3_new$weighted_bottleneck/wiki3_new$raw_distance
+sum(wiki3_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki3_new$weight)
+
+#par(mfrow=c(1,2))
+
+plot(wiki3_new$angle,wiki3_new$weight,col="red")
+points(wiki3_new$angle,wiki3_new$weighted_bottleneck,col="green")
+
+plot(wiki3_new$angle,wiki3_new$raw_distance,col="blue")
+
+wiki3_new[which.max(wiki3_new$weighted_bottleneck),] ### 47.1
+wiki3_new[which.max(wiki3_new$raw_distance),] ### 4.29
+wiki3_new[which(wiki3_new$weighted_bottleneck>0.368),] ### 20 angles
+
+
+
+wiki4_new <- read.csv("~/wiki4_new.csv") ### random1 and random2
+wiki4_new<- wiki4_new[rowSums(is.na(wiki4_new)) != ncol(wiki4_new),]
+wiki4_new$weight<- wiki4_new$weighted_bottleneck/wiki4_new$raw_distance
+sum(wiki4_new$weight,na.rm = TRUE) ### 114.8
+unique(wiki4_new$weight)
+
+#par(mfrow=c(1,2))
+
+plot(wiki4_new$angle,wiki4_new$weight,col="red")
+points(wiki4_new$angle,wiki4_new$weighted_bottleneck,col="green")
+
+plot(wiki4_new$angle,wiki4_new$raw_distance,col="blue")
+
+wiki4_new[which.max(wiki4_new$weighted_bottleneck),] ### 42.9
+wiki4_new[which.max(wiki4_new$raw_distance),] ### 4.29
+wiki4_new[which(wiki4_new$weighted_bottleneck>0.0526),] ### 182 angles
+```
+
+### Barcodes
+
+```{r}
+barcodes1 <- read_csv("~/barcodes1.csv", col_names = FALSE)
+times<- seq(7,ncol(barcodes1),3)
+for (i in 1:nrow(barcodes1)){
+  a<- as.numeric(substring(barcodes1[1,times],2))
+}
+
+```
+
+
+### Bottleneck distance 1
+```{r}
+self1 <- read_csv("~/self1.txt", col_names = FALSE) ### max2000
+other1 <- read_csv("~/other1.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self1)){
+  if (is.na(self1[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self1<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other1)){
+  if (is.na(other1[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other1<- bar.other
+
+bar.diff1<- bar.other1-bar.self1
+
+```
+
+### Bottleneck distance 2
+```{r}
+self2 <- read_csv("~/self2.txt", col_names = FALSE) ### city2000
+other2 <- read_csv("~/other2.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self2)){
+  if (is.na(self2[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self2<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other2)){
+  if (is.na(other2[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other2<- bar.other
+
+bar.diff2<- bar.other2-bar.self2
+
+```
+
+
+### Bottleneck distance 3
+```{r}
+self3 <- read_csv("~/self3.txt", col_names = FALSE) ### random_from_wiki_2000
+other3 <- read_csv("~/other3.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self3)){
+  if (is.na(self3[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self3<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other3)){
+  if (is.na(other3[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other3<- bar.other
+
+bar.diff3<- bar.other3-bar.self3
+
+```
+
+
+### Bottleneck distance 4
+```{r}
+self4 <- read_csv("~/self4.txt", col_names = FALSE) ### random2
+other4 <- read_csv("~/other4.txt", col_names = FALSE) ### random1
+
+start=1
+end=c()
+
+for (i in 1:nrow(self4)){
+  if (is.na(self4[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.self<- matrix(bar.length,20,byrow = FALSE)
+bar.self4<- bar.self
+
+start=1
+end=c()
+
+for (i in 1:nrow(other4)){
+  if (is.na(other4[i,1])==TRUE){
+    ending=i-1
+    end=c(end,ending)
+    starting=i+1
+    start=c(start,starting)
+  }
+}
+
+start=start[-401]
+bar.length<- end-start+1
+bar.other<- matrix(bar.length,20,byrow = FALSE)
+bar.other4<- bar.other
+
+bar.diff4<- bar.other4-bar.self4
+
+```
+
+
+### Bottleneck_angle_offset
+```{r}
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+
+bar.diff1.list<- as.numeric(bar.diff1)
+bar.diff2.list<- as.numeric(bar.diff2)
+bar.diff3.list<- as.numeric(bar.diff3)
+bar.diff4.list<- as.numeric(bar.diff4)
+wiki1_new$bar.diff<- bar.diff1.list
+wiki2_new$bar.diff<- bar.diff2.list
+wiki3_new$bar.diff<- bar.diff3.list
+wiki4_new$bar.diff<- bar.diff4.list
+
+angle_class<- as.numeric(levels(as.factor(wiki1_new$angle)))
+
+### angle 1-5
+raw1<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar1<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 6-10
+raw2<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar2<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 11-15
+raw3<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar3<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 16-20
+raw4<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar4<- wiki1_new %>% filter(wiki1_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+plot_grid(raw1,bar1,raw2,bar2,raw3,bar3,raw4,bar4,ncol=2)
+
+
+### angle 1-5
+raw1<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar1<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[1:5])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 6-10
+raw2<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar2<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[6:10])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 11-15
+raw3<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar3<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[11:15])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+### angle 16-20
+raw4<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),raw_distance,col=factor(angle)))+
+  geom_point()
+
+bar4<- wiki4_new %>% filter(wiki4_new$angle %in% angle_class[16:20])%>%
+  ggplot(aes(seq(1,100,1),bar.diff,col=factor(angle)))+
+  geom_point()
+
+plot_grid(raw1,bar1,raw2,bar2,raw3,bar3,raw4,bar4,ncol=2)
+```
+
+### Replacement data sets
+```{r}
+options(scipen=999)
+max2000_rank <- read_delim("~/max2000_rank.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+random1_2000 <- read_delim("~/random1_2000.txt", " ", escape_double = FALSE, trim_ws = TRUE)
+max2000_rank<- max2000_rank[4:2003,]
+random1_2000<- random1_2000[4:2003,]
+max2000_rank<- matrix(as.numeric(unlist(max2000_rank)),nrow=2000)
+random1_2000<- matrix(as.numeric(unlist(random1_2000)),nrow=2000)
+
+### rp 20
+rp<- sample(1:2000,20)
+max2000_rank_rp20<- max2000_rank
+max2000_rank_rp20[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 40
+rp<- sample(1:2000,40)
+max2000_rank_rp40<- max2000_rank
+max2000_rank_rp40[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 60
+rp<- sample(1:2000,60)
+max2000_rank_rp60<- max2000_rank
+max2000_rank_rp60[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 80
+rp<- sample(1:2000,80)
+max2000_rank_rp80<- max2000_rank
+max2000_rank_rp80[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 100
+rp<- sample(1:2000,100)
+max2000_rank_rp100<- max2000_rank
+max2000_rank_rp100[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 120
+rp<- sample(1:2000,120)
+max2000_rank_rp120<- max2000_rank
+max2000_rank_rp120[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 140
+rp<- sample(1:2000,140)
+max2000_rank_rp140<- max2000_rank
+max2000_rank_rp140[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 160
+rp<- sample(1:2000,160)
+max2000_rank_rp160<- max2000_rank
+max2000_rank_rp160[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 180
+rp<- sample(1:2000,180)
+max2000_rank_rp180<- max2000_rank
+max2000_rank_rp180[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 200
+rp<- sample(1:2000,200)
+max2000_rank_rp200<- max2000_rank
+max2000_rank_rp200[rp,1:200]<- random1_2000[rp,1:200]
+
+write.table(max2000_rank_rp20, "max2000_rank_rp20.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp40, "max2000_rank_rp40.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp60, "max2000_rank_rp60.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp80, "max2000_rank_rp80.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp100, "max2000_rank_rp100.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp120, "max2000_rank_rp120.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp140, "max2000_rank_rp140.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp160, "max2000_rank_rp160.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp180, "max2000_rank_rp180.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp200, "max2000_rank_rp200.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### More replacement
+
+### rp 250
+rp<- sample(1:2000,250)
+max2000_rank_rp250<- max2000_rank
+max2000_rank_rp250[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 300
+rp<- sample(1:2000,300)
+max2000_rank_rp300<- max2000_rank
+max2000_rank_rp300[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 350
+rp<- sample(1:2000,350)
+max2000_rank_rp350<- max2000_rank
+max2000_rank_rp350[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 400
+rp<- sample(1:2000,400)
+max2000_rank_rp400<- max2000_rank
+max2000_rank_rp400[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 450
+rp<- sample(1:2000,450)
+max2000_rank_rp450<- max2000_rank
+max2000_rank_rp450[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 500
+rp<- sample(1:2000,500)
+max2000_rank_rp500<- max2000_rank
+max2000_rank_rp500[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 550
+rp<- sample(1:2000,550)
+max2000_rank_rp550<- max2000_rank
+max2000_rank_rp550[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 600
+rp<- sample(1:2000,600)
+max2000_rank_rp600<- max2000_rank
+max2000_rank_rp600[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 650
+rp<- sample(1:2000,650)
+max2000_rank_rp650<- max2000_rank
+max2000_rank_rp650[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 700
+rp<- sample(1:2000,700)
+max2000_rank_rp700<- max2000_rank
+max2000_rank_rp700[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 750
+rp<- sample(1:2000,750)
+max2000_rank_rp750<- max2000_rank
+max2000_rank_rp750[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 800
+rp<- sample(1:2000,800)
+max2000_rank_rp800<- max2000_rank
+max2000_rank_rp800[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 850
+rp<- sample(1:2000,850)
+max2000_rank_rp850<- max2000_rank
+max2000_rank_rp850[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 900
+rp<- sample(1:2000,900)
+max2000_rank_rp900<- max2000_rank
+max2000_rank_rp900[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 950
+rp<- sample(1:2000,950)
+max2000_rank_rp950<- max2000_rank
+max2000_rank_rp950[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1000
+rp<- sample(1:2000,1000)
+max2000_rank_rp1000<- max2000_rank
+max2000_rank_rp1000[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1050
+rp<- sample(1:2000,1050)
+max2000_rank_rp1050<- max2000_rank
+max2000_rank_rp1050[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1100
+rp<- sample(1:2000,1100)
+max2000_rank_rp1100<- max2000_rank
+max2000_rank_rp1100[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1150
+rp<- sample(1:2000,1150)
+max2000_rank_rp1150<- max2000_rank
+max2000_rank_rp1150[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1200
+rp<- sample(1:2000,1200)
+max2000_rank_rp1200<- max2000_rank
+max2000_rank_rp1200[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1250
+rp<- sample(1:2000,1250)
+max2000_rank_rp1250<- max2000_rank
+max2000_rank_rp1250[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1300
+rp<- sample(1:2000,1300)
+max2000_rank_rp1300<- max2000_rank
+max2000_rank_rp1300[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1350
+rp<- sample(1:2000,1350)
+max2000_rank_rp1350<- max2000_rank
+max2000_rank_rp1350[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1400
+rp<- sample(1:2000,1400)
+max2000_rank_rp1400<- max2000_rank
+max2000_rank_rp1400[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1450
+rp<- sample(1:2000,1450)
+max2000_rank_rp1450<- max2000_rank
+max2000_rank_rp1450[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1500
+rp<- sample(1:2000,1500)
+max2000_rank_rp1500<- max2000_rank
+max2000_rank_rp1500[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1550
+rp<- sample(1:2000,1550)
+max2000_rank_rp1550<- max2000_rank
+max2000_rank_rp1550[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1600
+rp<- sample(1:2000,1600)
+max2000_rank_rp1600<- max2000_rank
+max2000_rank_rp1600[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1650
+rp<- sample(1:2000,1650)
+max2000_rank_rp1650<- max2000_rank
+max2000_rank_rp1650[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1700
+rp<- sample(1:2000,1700)
+max2000_rank_rp1700<- max2000_rank
+max2000_rank_rp1700[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1750
+rp<- sample(1:2000,1750)
+max2000_rank_rp1750<- max2000_rank
+max2000_rank_rp1750[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1800
+rp<- sample(1:2000,1800)
+max2000_rank_rp1800<- max2000_rank
+max2000_rank_rp1800[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1850
+rp<- sample(1:2000,1850)
+max2000_rank_rp1850<- max2000_rank
+max2000_rank_rp1850[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1900
+rp<- sample(1:2000,1900)
+max2000_rank_rp1900<- max2000_rank
+max2000_rank_rp1900[rp,1:200]<- random1_2000[rp,1:200]
+
+### rp 1950
+rp<- sample(1:2000,1950)
+max2000_rank_rp1950<- max2000_rank
+max2000_rank_rp1950[rp,1:200]<- random1_2000[rp,1:200]
+
+write.table(max2000_rank_rp250, "max2000_rank_rp250.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp300, "max2000_rank_rp300.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp350, "max2000_rank_rp350.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp400, "max2000_rank_rp400.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp450, "max2000_rank_rp450.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp500, "max2000_rank_rp500.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp550, "max2000_rank_rp550.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp600, "max2000_rank_rp600.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp650, "max2000_rank_rp650.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp700, "max2000_rank_rp700.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp750, "max2000_rank_rp750.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp800, "max2000_rank_rp800.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp850, "max2000_rank_rp850.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp900, "max2000_rank_rp900.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp950, "max2000_rank_rp950.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1000, "max2000_rank_rp1000.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1050, "max2000_rank_rp1050.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1100, "max2000_rank_rp1100.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1150, "max2000_rank_rp1150.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1200, "max2000_rank_rp1200.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1250, "max2000_rank_rp1250.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1300, "max2000_rank_rp1300.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1350, "max2000_rank_rp1350.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1400, "max2000_rank_rp1400.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1450, "max2000_rank_rp1450.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1500, "max2000_rank_rp1500.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1550, "max2000_rank_rp1550.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1600, "max2000_rank_rp1600.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1650, "max2000_rank_rp1650.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1700, "max2000_rank_rp1700.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1750, "max2000_rank_rp1750.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1800, "max2000_rank_rp1800.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1850, "max2000_rank_rp1850.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1900, "max2000_rank_rp1900.txt",row.names=FALSE, na="", col.names = FALSE)
+write.table(max2000_rank_rp1950, "max2000_rank_rp1950.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### small replacement
+
+### rp 1
+rp<- sample(1:2000,1)
+max2000_rank_rp1<- max2000_rank
+max2000_rank_rp1[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp1, "max2000_rank_rp1.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 2
+rp<- sample(1:2000,2)
+max2000_rank_rp2<- max2000_rank
+max2000_rank_rp2[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp2, "max2000_rank_rp2.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 3
+rp<- sample(1:2000,3)
+max2000_rank_rp3<- max2000_rank
+max2000_rank_rp3[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp3, "max2000_rank_rp3.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 4
+rp<- sample(1:2000,4)
+max2000_rank_rp4<- max2000_rank
+max2000_rank_rp4[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp4, "max2000_rank_rp4.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 5
+rp<- sample(1:2000,5)
+max2000_rank_rp5<- max2000_rank
+max2000_rank_rp5[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp5, "max2000_rank_rp5.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 6
+rp<- sample(1:2000,6)
+max2000_rank_rp6<- max2000_rank
+max2000_rank_rp6[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp6, "max2000_rank_rp6.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 8
+rp<- sample(1:2000,8)
+max2000_rank_rp8<- max2000_rank
+max2000_rank_rp8[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp8, "max2000_rank_rp8.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### rp 10
+rp<- sample(1:2000,10)
+max2000_rank_rp10<- max2000_rank
+max2000_rank_rp10[rp,1:200]<- random1_2000[rp,1:200]
+write.table(max2000_rank_rp10, "max2000_rank_rp10.txt",row.names=FALSE, na="", col.names = FALSE)
+
+### 20 bins in RIVET
+rp_num<- c(1,5,10,20,seq(40,200,by=20),seq(250,1950,by=50))
+rp_md<- c(0.05263446864,0.05842528485,0.05744390403,0.1101542249,0.1108197802,0.1108443354,0.1109104706,0.1109288877,0.1108443354,0.1108948986,0.1109233195,0.1109071737,0.1109198794,0.1109198794,0.1109119947,0.1109119947,0.1109214004,0.1109132089,0.1627700091,0.1627746893,0.1627746893,0.1627788976,0.1627779542,0.162776907,0.162776907,0.1627667028,0.1627788976,0.1627734314,0.1627734314,0.1627746893,0.1627770193,0.1627777946,0.1627777946,0.1627788976,0.1627746893,0.1627788976,0.2146297285,0.2150093251,0.2150093251,0.2150072151,0.2150093251,0.21500767,0.2668596001,0.2668597071,0.2668596001,0.2668596001,0.3190906936,0.3682807685)
+plot(rp_num, rp_md)
+
+### 40 bins in RIVET
+rp_num<- c(1,5,10,20,seq(40,200,by=20),seq(250,1950,by=50))
+rp_md<- c(0.05675972036,0.08117526604,0.08186803306,0.1079988912,0.1078394127,0.1079011702,0.09992893884,0.1078396809,0.1078876223,0.1079135386,0.1079005807,0.1080939454,0.1079092193,0.133541563,0.107903518,0.1234514693,0.1080889513,0.1335416483,0.1331825726,0.1331825726,0.1331865086,0.1331825726,0.1331836602,0.1584511386,0.1584375185,0.1584513555,0.1584473646,0.1584476993,0.1584473646,0.1584475501,0.1584511386,0.1584511386,0.1584513555,0.1837140645,0.1837172464,0.1837140542,0.1838994197,0.1838994197,0.2091637404,0.2091652736,0.20916519,0.2344318194,0.2346169541,0.2598832401,0.2598832401,0.3107844048,0.3362345207,0.3362345207)
+plot(rp_num, rp_md)
+
+rp_md_random<- c(0.346150887,0.3461404363,0.3461449627,0.346152529,0.3461528397,0.3461535719,0.3461537716,0.3461528397,0.3461533944,0.3461537272,0.3461535497,0.3461536607,0.3461536607,0.3461535941,0.3461535941,0.346153705,0.3461535941,0.3461536829,0.3461537272,0.3461537272,0.3461537716,0.3461537494,0.3461537716,0.3461537716,0.3461535941,0.3461537716,0.346153705,0.3461537494,0.3461537272,0.3461537494,0.3461537716,0.3461537716,0.3461537716,0.3461537272,0.3461537716,0.3461537716,0.3461537716,0.2564120255,0.3461537272,0.2820524768,0.2564125779,0.3076934184,0.2564125779,0.3461537716,0.3461537716,0.2051296518,0.1025665542,0.102566554223)
+plot(rp_num,rp_md_random)
+```
+
+
+```{r}
+wiki<- c(0.3682807685, 0.3683908953, 0.3684205847, 0.3682815584, 0.3683917432, 0.3684214326, 0.3682809847, 0.3683911693, 0.3684213799, 0.3682815584, 0.3683917432, 0.3684214326, 0.3682815584, 0.3683917432, 0.3684214326, 0.3682815584, 0.3683917432, 0.3684214326)
+random<- c(0.05263730484, 0.05263730484, 0.05263730484, 0.05263730484, 0.05263730484, 0.05263554452, 0.05263554798, 0.05263566192, 0.05263566192, 0.05263554452, 0.0526373083, 0.05263565845, 0.05263566192, 0.05263566192, 0.05263555144)
+total<- c(wiki,random)
+diff<- c(rep(1,length(wiki)),rep(0,rep(length(random))))
+both<- data.frame(total=total, diff=diff)
+
+wilcox.test(total~diff, data=both)
+
+```
